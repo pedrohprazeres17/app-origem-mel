@@ -2,7 +2,7 @@
 
 ## Status
 
-Ativo — protótipo HTML navegável V1 concluído em 18/11/2026.
+Ativo — reconstrução fiel ao artifact original concluída em 18/11/2026.
 
 ## Objetivo
 
@@ -47,12 +47,16 @@ Validar a V1 com Pedro e a autora. Depois, definir dados reais, painel de cadast
 
 ## V1 navegável
 
-- 22 estados/telas representados em uma SPA responsiva.
+- 22 telas representadas em uma SPA mobile de 390 × 844 px.
 - Fluxo completo de onboarding, scan simulado, entrada manual do token, sucesso e erro.
 - Ficha, resumo, origem, token e rastreabilidade do lote.
 - Catálogo, comparação, produtores, conteúdo educativo, salvos e histórico.
 - Persistência local dos méis salvos.
 - Dados e QR Code ainda demonstrativos; nenhum deles deve ser interpretado como certificação real.
+
+## Correção de direção visual
+
+A primeira implementação foi rejeitada por se afastar da referência. Ela foi substituída por uma reconstrução baseada diretamente nas 22 telas do artifact: Anton e Montserrat, amarelo `#FFDE59`, marfim `#FFFCF1`, preto `#161512`, composição plana, bordas finas, ilustrações editoriais, hierarquia e navegação da autora. A regra do projeto é não reinterpretar nem “melhorar” a identidade sem aprovação.
 
 ## Links
 
