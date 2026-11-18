@@ -53,3 +53,8 @@ Validar a V1 com Pedro e a autora. Depois, definir dados reais, painel de cadast
 - Catálogo, comparação, produtores, conteúdo educativo, salvos e histórico.
 - Persistência local dos méis salvos.
 - Dados e QR Code ainda demonstrativos; nenhum deles deve ser interpretado como certificação real.
+
+## Links
+
+- Aplicativo: `https://pedrohprazeres17.github.io/app-origem-mel/`
+- Repositório: `https://github.com/pedrohprazeres17/app-origem-mel`
