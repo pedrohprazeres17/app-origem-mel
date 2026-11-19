@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#FFFCF1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Origem">
+<meta name="description" content="Origem — conheça o mel além do pote: produtor, origem, florada e lote a partir do QR Code ou token.">
+<title>Origem — informação e origem do mel</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Faixas que o protótipo reservava para status bar (54px) e home indicator (34px). */
+    --sat: max(env(safe-area-inset-top, 0px), 10px);
+    --sab: max(env(safe-area-inset-bottom, 0px), 12px);
+    --nav-h: calc(54px + var(--sab));
+    --fit: 1;
+  }
+  html, body { margin: 0; height: 100%; background: #FFFCF1; }
+  body { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
+  #app { position: fixed; inset: 0; overflow: hidden; }
+  #app * { scrollbar-width: none; }
+  #app *::-webkit-scrollbar { display: none; }
+  #app a, #app button, #app select { touch-action: manipulation; }
+  #app :focus { outline: none; }
+  #app :focus-visible { outline: 2px solid #161512; outline-offset: 2px; }
+  #app input:focus-visible { outline: none; }
+
+  /* Telas largas (desktop/tablet): mostra o app no tamanho exato do protótipo, 390×844. */
+  @media (min-width: 600px) {
+    :root { --sat: 54px; --sab: 34px; }
+    html, body { background: #E9E2C8; }
+    #app {
+      inset: auto; left: 50%; top: 50%; width: 390px; height: 844px;
+      transform: translate(-50%, -50%) scale(var(--fit));
+      border-radius: 44px; box-shadow: 0 0 0 10px #161512, 0 30px 80px rgba(22, 21, 18, .35);
+    }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<!--TEMPLATES-->
+<script>
+/*RUNTIME*/
+</script>
+<script>
+var S = window.__screens;
+window.__FIRST = /*FIRST*/;
+/*SCREENS*/
+window.__start();
+</script>
+</body>
+</html>

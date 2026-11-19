@@ -2,7 +2,7 @@
 
 ## Status
 
-Ativo — reconstrução fiel ao artifact original concluída em 18/11/2026.
+Ativo — HTML funcional gerado a partir do código-fonte original do Claude Design (19/11/2026).
 
 ## Objetivo
 
@@ -45,18 +45,22 @@ Permitir que o consumidor conheça o mel além do pote: produtor, origem, florad
 
 Validar a V1 com Pedro e a autora. Depois, definir dados reais, painel de cadastro de produtores/lotes, banco de dados, autenticação e leitura real de QR Code para o MVP.
 
-## V1 navegável
+## Versão atual (HTML funcional)
 
-- 22 telas representadas em uma SPA mobile de 390 × 844 px.
-- Fluxo completo de onboarding, scan simulado, entrada manual do token, sucesso e erro.
-- Ficha, resumo, origem, token e rastreabilidade do lote.
-- Catálogo, comparação, produtores, conteúdo educativo, salvos e histórico.
-- Persistência local dos méis salvos.
-- Dados e QR Code ainda demonstrativos; nenhum deles deve ser interpretado como certificação real.
+O app é gerado **diretamente do código-fonte das 22 telas do Claude Design**, sem redesenho:
 
-## Correção de direção visual
+- `design/` — arquivos originais exportados do projeto (`App01Splash.dc.html` … `App22Historico.dc.html` e `canvas.json`).
+- `tools/build.mjs` — gera o `index.html` a partir de `design/`. Rodar: `node tools/build.mjs`.
+- `tools/runtime.js` — mini-runtime que executa as telas no mesmo formato do Claude Design (`{{holes}}`, `sc-for`, `sc-if`, `setState`), com atualização do DOM no lugar para manter as animações do protótipo.
+- `tools/shell.html` — casca da página (fontes, viewport, PWA).
 
-A primeira implementação foi rejeitada por se afastar da referência. Ela foi substituída por uma reconstrução baseada diretamente nas 22 telas do artifact: Anton e Montserrat, amarelo `#FFDE59`, marfim `#FFFCF1`, preto `#161512`, composição plana, bordas finas, ilustrações editoriais, hierarquia e navegação da autora. A regra do projeto é não reinterpretar nem “melhorar” a identidade sem aprovação.
+Adaptações feitas sobre o protótipo (só o necessário para virar app):
+
+- **Mobile first:** a tela ocupa o aparelho inteiro; as faixas de status bar/home indicator viram as áreas seguras do celular e o conteúdo rola quando a tela é menor que 844 px. Em telas largas o app aparece no tamanho exato do protótipo (390 × 844).
+- **Fluxos:** splash avança sozinho; onboarding só aparece na primeira vez; scan simulado → localizando → mel encontrado; token digitado é validado (`MEL-2026-LAR-00421` encontra o mel; outro código leva para “Token não encontrado” mostrando o código lido).
+- **PWA:** pode ser adicionado à tela inicial (manifest + ícones).
+
+Limitações conhecidas: a câmera/leitura real de QR Code ainda é simulada; salvos, histórico e filtros mantêm o estado de demonstração de cada tela, como no protótipo; dados de Produtor A/B/C continuam ilustrativos.
 
 ## Links
 

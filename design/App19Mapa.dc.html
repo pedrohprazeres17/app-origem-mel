@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Mapa de origem</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:54px;flex:none"></div>
+<header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="App18Produtores.dc.html" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em">MAPA DE ORIGEM</span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"></div></header>
+<main style="flex:1;min-height:0;overflow:hidden;position:relative;display:flex;flex-direction:column">
+<div style="padding:0 20px;display:flex;flex-direction:column;gap:12px">
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:38px;line-height:.92;">DE ONDE VÊM<br>OS MÉIS?</h1>
+<div style="height:290px;background:#FFF0B6;border-radius:22px;position:relative;overflow:hidden">
+<sc-for list="{{tiles}}" as="t" hint-placeholder-count="11">
+<div style="{{t.pos}}">
+<sc-if value="{{t.prod}}" hint-placeholder-val="{{ false }}"><button type="button" aria-pressed="{{t.active}}" aria-label="{{t.aria}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.short}}</button><span aria-hidden="true" style="{{t.pin}}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"></path><circle cx="12" cy="10" r="2.2"></circle></svg></span></sc-if>
+<sc-if value="{{t.plain}}" hint-placeholder-val="{{ true }}"><span style="{{t.style}}">{{t.short}}</span></sc-if>
+</div>
+</sc-for>
+<span style="position:absolute;right:12px;bottom:10px;font-size:10px;font-weight:600;color:#5E5A4E">Esquemático · fora de escala</span>
+</div>
+<div aria-live="polite" style="background:#FFFFFF;border:1px solid #E6DFC4;border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;gap:12px;align-items:center"><span style="width:48px;height:55px;background:#FFDE59;display:flex;align-items:center;justify-content:center;font-family:Anton,sans-serif;font-size:26px;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)">{{sel.letter}}</span><span style="flex:1;display:flex;flex-direction:column;gap:2px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;font-size:9px">PRODUTOR</span><b style="font-family:Anton,sans-serif;font-weight:400;font-size:24px;line-height:1">{{sel.prodUp}}</b><span style="font-size:12px;font-weight:600">{{sel.name}} — PR</span></span></div>
+<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;font-size:9px;margin-right:4px">FLORADAS</span><sc-for list="{{sel.fl}}" as="m" hint-placeholder-count="2"><span style="background:{{m.c}};padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700">{{m.f}}</span></sc-for></div>
+<a href="App15Produtor.dc.html" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;background:#FFDE59;color:#161512;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;min-height:46px">VER PERFIL →</a>
+</div>
+</div>
+</main>
+<nav aria-label="Navegação principal" style="height:88px;flex:none;box-sizing:border-box;border-top:1px solid #E6DFC4;background:#FFFCF1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;padding:6px 6px 34px;position:relative;z-index:3"><a href="App05Home.dc.html" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-6 8 6v9H4z"></path><path d="M10 20v-5h4v5"></path></svg>Início<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="App17Meis.dc.html" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg>Méis<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="App06Scanner.dc.html" aria-label="Escanear QR Code" style="display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:-30px;text-decoration:none;color:#161512;font-size:10px;font-weight:700"><span style="width:66px;height:76px;background:#161512;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><span style="width:58px;height:67px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"></path><path d="M7 12h10"></path></svg></span></span>SCAN</a><a href="App18Produtores.dc.html" aria-current="page" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#161512;font-size:10px;font-weight:700;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg>Produtores<span style="width:6px;height:7px;background:#FFDE59;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="App21Salvos.dc.html" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"></path></svg>Salvos<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a></nav>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { sel: 'sjp' }; }
+  renderVals() {
+    const T = [
+      { id: 'at', s: 'Alm. Tamandaré', x: 256, y: 0 }, { id: 'col', s: 'Colombo', x: 384, y: 0, prod: 'Produtor B', name: 'Colombo', fl: [{ f: 'Multifloral', c: '#E9A23B' }] },
+      { id: 'qb', s: 'Quatro Barras', x: 512, y: 0 }, { id: 'cm', s: 'Campo Magro', x: 192, y: 108 }, { id: 'cwb', s: 'Curitiba', x: 320, y: 108, city: true },
+      { id: 'pin', s: 'Pinhais', x: 448, y: 108 }, { id: 'cl', s: 'Campo Largo', x: 128, y: 216 }, { id: 'ara', s: 'Araucária', x: 256, y: 216 },
+      { id: 'frg', s: 'Faz. Rio Grande', x: 384, y: 216 },
+      { id: 'sjp', s: 'S. J. dos Pinhais', x: 512, y: 216, prod: 'Produtor A', name: 'São José dos Pinhais', fl: [{ f: 'Laranjeira', c: '#F6DC6B' }, { f: 'Multifloral', c: '#E9A23B' }] },
+      { id: 'man', s: 'Mandirituba', x: 320, y: 324, prod: 'Produtor C', name: 'Mandirituba', fl: [{ f: 'Eucalipto', c: '#C2C76E' }] }
+    ];
+    const s = this.state.sel;
+    const base = 'width:60px;height:69px;border:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 5px;box-sizing:border-box;line-height:1.15;font-family:Montserrat,sans-serif;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);';
+    const tiles = T.map((t) => { const on = t.id === s; let st = base;
+      if (t.prod) st += 'font-size:8px;font-weight:700;cursor:pointer;' + (on ? 'background:#161512;color:#FFDE59' : 'background:#FFDE59;color:#161512');
+      else st += 'font-size:7px;font-weight:600;' + (t.city ? 'background:#E6DFC4;color:#3D3A32' : 'background:#FFFCF1;color:#5E5A4E');
+      return { short: t.s, prod: !!t.prod, plain: !t.prod, active: on, aria: t.prod ? t.name + ': ' + t.prod : t.s,
+        pos: 'position:absolute;left:' + (t.x * 0.5 + 4) + 'px;top:' + (t.y * 0.5 + 34) + 'px',
+        pin: 'position:absolute;left:19px;top:-18px;width:24px;height:24px;border-radius:50%;background:#FFDE59;border:2px solid #161512;display:flex;align-items:center;justify-content:center;transition:transform .2s ease;transform:' + (on ? 'translateY(-4px) scale(1.1)' : 'none'),
+        style: st, pick: () => this.setState({ sel: t.id }) }; });
+    const c = T.find((t) => t.id === s);
+    return { tiles, sel: { letter: c.prod.slice(-1), prodUp: c.prod.toUpperCase(), name: c.name, fl: c.fl } };
+  }
+}
+</script>
+</body>
+</html>

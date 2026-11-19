@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Scanner de QR Code</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#1E1C18;font-family:Montserrat,sans-serif;color:#FFFCF1;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:54px;flex:none"></div>
+<header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="App05Home.dc.html" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:rgba(22,21,18,.55);border:1.5px solid rgba(255,252,241,.6);display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FFFCF1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em"></span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"><button type="button" aria-label="{{flashLabel}}" aria-pressed="{{flash}}" onClick="{{toggle}}" style="{{flashStyle}}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 13h6l-1 8 8-10h-6z"></path></svg></button></div></header>
+<main style="flex:1;min-height:0;overflow:hidden;position:relative;display:flex;flex-direction:column">
+<span aria-hidden="true" style="position:absolute;left:50%;top:50%;margin:-210px 0 0 -160px;opacity:.28"><svg viewBox="0 0 120 160" width="320" height="427" aria-hidden="true" style="position:relative;flex:none"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="#B8963A"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path></svg></span>
+<div style="position:relative;padding:0 20px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center">
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:38px;line-height:.92;color:#FFFCF1">ESCANEAR MEL</h1>
+<p style="margin:0;font-size:15px;line-height:1.45;font-weight:500;max-width:280px">Posicione o QR Code dentro da área indicada.</p>
+</div>
+<div style="flex:1;display:flex;align-items:center;justify-content:center;position:relative">
+<a href="App08Loading.dc.html" aria-label="Área de leitura do QR Code" style="width:262px;height:262px;position:relative;display:flex;align-items:center;justify-content:center;text-decoration:none">
+<span style="width:52px;height:52px;position:absolute;left:0;top:0;border-left:5px solid #FFDE59;border-top:5px solid #FFDE59;border-radius:14px 0 0 0"></span><span style="width:52px;height:52px;position:absolute;right:0;top:0;border-right:5px solid #FFDE59;border-top:5px solid #FFDE59;border-radius:0 14px 0 0"></span><span style="width:52px;height:52px;position:absolute;left:0;bottom:0;border-left:5px solid #FFDE59;border-bottom:5px solid #FFDE59;border-radius:0 0 0 14px"></span><span style="width:52px;height:52px;position:absolute;right:0;bottom:0;border-right:5px solid #FFDE59;border-bottom:5px solid #FFDE59;border-radius:0 0 14px 0"></span>
+<span aria-hidden="true" style="position:absolute;left:-9px;top:-10px;width:14px;height:16px;background:#FFDE59;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span><span aria-hidden="true" style="position:absolute;right:-9px;bottom:-10px;width:14px;height:16px;background:#FFDE59;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span>
+<span style="width:160px;height:160px;background:#FFFCF1;border-radius:10px;display:flex;align-items:center;justify-content:center;transform:rotate(-4deg)"><svg viewBox="0 0 100 100" width="128" height="128" role="img" aria-label="QR Code do produto"><path d="{{qr}}" fill="#161512"></path><rect x="40" y="40" width="20" height="20" fill="#FFFCF1"></rect><path d="M50 42l7 4v8l-7 4-7-4v-8z" fill="#FFDE59" stroke="#161512" stroke-width="1"></path></svg></span>
+<span aria-hidden="true" style="{{line}}"></span>
+</a>
+</div>
+<div style="position:relative;padding:0 20px 8px;display:flex;flex-direction:column;gap:14px">
+<p style="margin:0;font-size:13px;line-height:1.5;color:#D9D1B4;text-align:center">O QR Code geralmente está na etiqueta<br>ou ficha do produto.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><a href="App07Token.dc.html" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #FFFCF1;color:#FFFCF1;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FFFCF1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"></path></svg>DIGITAR TOKEN</a><button type="button" onClick="{{toggle}}" style="{{flashBtn}}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 13h6l-1 8 8-10h-6z"></path></svg>{{flashText}}</button></div>
+</div>
+</main>
+<div aria-hidden="true" style="height:34px;flex:none"></div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { down: false, flash: false }; }
+  componentDidMount() { this.t = setInterval(() => this.setState({ down: !this.state.down }), 1600); setTimeout(() => this.setState({ down: true }), 50); }
+  componentWillUnmount() { clearInterval(this.t); }
+  renderVals() {
+    const N = 25, u = 4; let seed = 7, d = '';
+    const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    const fin = (r, c) => (r < 7 && c < 7) || (r < 7 && c >= N - 7) || (r >= N - 7 && c < 7);
+    const fOn = (r, c) => { const R = r < 7 ? r : r - (N - 7); const C = c < 7 ? c : c - (N - 7); const m = Math.max(Math.abs(R - 3), Math.abs(C - 3)); return m === 3 || m <= 1; };
+    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) { if (fin(r, c) ? fOn(r, c) : rnd() > 0.52) d += 'M' + c * u + ' ' + r * u + 'h' + u + 'v' + u + 'h-' + u + 'z'; }
+    const f = this.state.flash;
+    return { qr: d, flash: f,
+      line: 'position:absolute;left:18px;right:18px;height:3px;border-radius:2px;background:#FFDE59;box-shadow:0 0 14px 2px rgba(255,222,89,.7);transition:top 1.6s ease-in-out;top:' + (this.state.down ? 236 : 22) + 'px',
+      toggle: () => this.setState({ flash: !this.state.flash }),
+      flashLabel: f ? 'Desativar flash' : 'Ativar flash',
+      flashText: f ? 'FLASH LIGADO' : 'ATIVAR FLASH',
+      flashStyle: 'width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;' + (f ? 'background:#FFDE59;color:#161512;border:0' : 'background:rgba(22,21,18,.55);color:#FFFCF1;border:1.5px solid rgba(255,252,241,.6)'),
+      flashBtn: 'display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:999px;font:700 13px Montserrat,sans-serif;letter-spacing:.1em;cursor:pointer;' + (f ? 'background:#FFDE59;color:#161512;border:0' : 'background:transparent;color:#FFFCF1;border:1.5px solid #FFFCF1') };
+  }
+}
+</script>
+</body>
+</html>
