@@ -120,16 +120,16 @@
   }
 
   /* ---------- montagem ---------- */
-  var host, current = null, ctx = { token: null };
+  var host, current = null, ctx = { token: null, via: 'qr' };
   window.__ctx = ctx;
-  var VALID = '2026-LAR-00421';
-  function norm(t) { return String(t || '').toUpperCase().replace(/\s+/g, '').replace(/^MEL-/, ''); }
+  var App = window.Origem;
+  var DEFAULT = 'MEL-2026-LAR-00421';
   function ctxVals() {
-    var t = ctx.token == null ? null : norm(ctx.token);
-    return {
-      loadLabel: 'MEL-' + (t == null ? VALID : t),
-      nfLabel: 'MEL-' + (t == null || t === VALID ? '2026-LAR-0042' : t)
-    };
+    var t = ctx.token == null ? null : App.norm(ctx.token);
+    var raw = ctx.token == null ? null : String(ctx.token).toUpperCase().trim();
+    var shown = t == null ? DEFAULT : (App.byToken(t) || /^MEL-\d{4}-[A-Z]{3}-\d{5}$/.test(t) ? t : (raw.indexOf('MEL-') === 0 ? raw : 'MEL-' + raw));
+    if (shown.length > 26) shown = shown.slice(0, 25) + '…';
+    return { loadLabel: shown, nfLabel: t == null || App.byToken(t) ? 'MEL-2026-LAR-0042' : shown };
   }
 
   function paint(inst) {
@@ -142,6 +142,7 @@
     for (var i = 0; i < out.length; i++) frag.appendChild(out[i]);
     if (!inst.__mounted) host.replaceChildren.apply(host, Array.prototype.slice.call(frag.childNodes));
     else morphChildren(host, frag);
+    if (inst.componentDidRender) inst.componentDidRender();
   }
 
   function find(e, type) {
@@ -151,46 +152,85 @@
 
   var timers = [];
   function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
-  function to(id) { location.replace('#' + id); }
-  function seenOnboarding() { try { return localStorage.getItem('origem:onb') === '1'; } catch (e) { return false; } }
+  var replacing = false;
+  function to(hash) { replacing = true; location.replace('#' + hash); }
+  window.__go = to;
 
-  function mount(id, prev) {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function animateIn(dir) {
+    var el = host.firstElementChild;
+    if (!el || reduce || !el.animate || dir === 0) return;
+    el.animate([{ opacity: 0, transform: 'translateX(' + (dir > 0 ? 28 : -28) + 'px)' }, { opacity: 1, transform: 'none' }],
+      { duration: 260, easing: 'cubic-bezier(.2,.8,.2,1)' });
+  }
+
+  function mount(id, param, dir) {
     if (current) {
       current.__dead = true;
+      if (current.__unsub) current.__unsub();
       if (current.componentWillUnmount) try { current.componentWillUnmount(); } catch (e) { console.error(e); }
     }
     timers.forEach(clearTimeout); timers = [];
     var tpl = document.getElementById('t-' + id);
-    var inst = new S[id]({});
+    var inst = new S[id]({ param: param || null });
     inst.__tpl = tpl;
-    current = inst; current.__id = id;
+    current = inst; current.__id = id; current.__param = param || null;
     document.title = (tpl.getAttribute('data-title') || 'Origem').replace(/^[^—]*— /, '') + ' · Origem';
     paint(inst);
     inst.__mounted = true;
+    inst.__unsub = App.subscribe(function () { inst.forceUpdate(); });
+    animateIn(dir);
     if (inst.componentDidMount) inst.componentDidMount();
-    hooks(id, prev);
+    hooks(id);
+  }
+
+  function buzz(p) {
+    var ua = navigator.userActivation;
+    if (navigator.vibrate && (!ua || ua.hasBeenActive)) try { navigator.vibrate(p); } catch (e) {}
+  }
+  function resolveToken() {
+    var m = App.byToken(ctx.token == null ? DEFAULT : ctx.token);
+    if (m) { App.addHistory(m.id, ctx.via); buzz(35); return 'App09Found/' + m.id; }
+    buzz([30, 60, 30]);
+    return 'App10NotFound';
   }
 
   /* Comportamentos de app que o protótipo apenas sugere. */
   function hooks(id) {
-    if (id === 'App01Splash') later(function () { to(seenOnboarding() ? 'App05Home' : 'App02OnbA'); }, 2600);
-    if (id === 'App05Home') { try { localStorage.setItem('origem:onb', '1'); } catch (e) {} }
-    if (id === 'App08Loading') later(function () { to(norm(ctx.token == null ? VALID : ctx.token) === VALID ? 'App09Found' : 'App10NotFound'); }, 2400);
+    if (id === 'App01Splash') later(function () { to(App.onboarded() ? 'App05Home' : 'App02OnbA'); }, 2600);
+    if (id === 'App05Home') App.setOnboarded();
+    if (id === 'App08Loading') later(function () { to(resolveToken()); }, 1900);
   }
 
+  var depth = 0;
   function route() {
-    var id = decodeURIComponent(location.hash.slice(1));
+    var hash = decodeURIComponent(location.hash.slice(1));
     var prev = current && current.__id;
-    if (!S[id]) id = window.__FIRST;
-    if (id === 'App08Loading') {
-      if (prev === 'App07Token') ctx.token = current.state.val;
-      else if (prev !== 'App08Loading') ctx.token = null; // leitura do QR (simulada)
+    // Link direto do QR Code: #t=MEL-2026-LAR-00421
+    if (/^t=/.test(hash)) {
+      ctx.token = hash.slice(2); ctx.via = 'qr';
+      App.setOnboarded();
+      history.replaceState({ d: depth }, '', '#App08Loading');
+      hash = 'App08Loading';
+      prev = '#deeplink';
     }
-    if (id === 'App09Found' && prev === 'App08Loading' && ctx.token != null && norm(ctx.token) !== VALID) id = 'App10NotFound';
-    if (id === 'App02OnbA' && prev === 'App01Splash' && seenOnboarding()) id = 'App05Home';
-    if ('#' + id !== location.hash) history.replaceState(null, '', '#' + id);
-    if (prev === id) return;
-    mount(id, prev);
+    var parts = hash.split('/'), id = parts[0], param = parts[1] || null;
+    if (!S[id]) { id = window.__FIRST; param = null; }
+    if (id === 'App08Loading' && prev === 'App07Token') { ctx.token = current.state.val; ctx.via = 'token'; }
+    else if (id === 'App08Loading' && prev !== '#deeplink' && prev !== 'App08Loading' && prev !== 'App06Scanner') { ctx.token = null; ctx.via = 'qr'; }
+    if (id === 'App09Found' && !param && prev === 'App08Loading') { timers.forEach(clearTimeout); return to(resolveToken()); }
+    if (id === 'App02OnbA' && prev === 'App01Splash' && App.onboarded()) { id = 'App05Home'; param = null; }
+
+    // Direção da navegação (para a transição e para o botão Voltar).
+    var dir = 1, st = history.state;
+    if (st && typeof st.d === 'number' && !replacing) { dir = st.d < depth ? -1 : st.d > depth ? 1 : 0; depth = st.d; }
+    else if (replacing) { dir = prev === 'App08Loading' || prev === 'App01Splash' ? 1 : 0; }
+    else if (current) depth++;
+    replacing = false;
+    var want = '#' + id + (param ? '/' + param : '');
+    history.replaceState({ d: depth }, '', want);
+    if (prev === id && (current.__param || null) === param) return;
+    mount(id, param, current ? dir : 0);
   }
 
   function fit() {
@@ -200,7 +240,12 @@
 
   window.__start = function () {
     host = document.getElementById('app');
-    host.addEventListener('click', function (e) { var f = find(e, 'click'); if (f) f(e); });
+    host.addEventListener('click', function (e) {
+      var back = e.target.closest && e.target.closest('a[aria-label="Voltar"]');
+      if (back && depth > 0) { e.preventDefault(); history.back(); return; }
+      var f = find(e, 'click'); if (f) f(e);
+    });
+    host.addEventListener('keydown', function (e) { var f = find(e, 'keydown'); if (f) f(e); });
     host.addEventListener('input', function (e) { var f = find(e, 'change') || find(e, 'input'); if (f) f(e); });
     window.addEventListener('hashchange', route);
     window.addEventListener('resize', fit);

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Etiquetas QR · Origem</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --mel: #FFDE59; --mel-claro: #FFF0B6; --marfim: #FFFCF1; --carvao: #161512; --linha: #E6DFC4; --texto2: #5E5A4E; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #E9E2C8; color: var(--carvao); font-family: Montserrat, sans-serif; }
+  .hex { clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+  header { max-width: 920px; margin: 0 auto; padding: 28px 16px 8px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
+  .marca { display: flex; align-items: center; gap: 8px; font-family: Anton, sans-serif; font-size: 20px; letter-spacing: .04em; }
+  .marca i { width: 20px; height: 23px; background: var(--mel); display: block; }
+  h1 { margin: 10px 0 6px; font-family: Anton, sans-serif; font-weight: 400; font-size: clamp(36px, 8vw, 56px); line-height: .92; }
+  header p { margin: 0; max-width: 520px; font-size: 14px; line-height: 1.5; font-weight: 500; }
+  .acoes { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 999px; border: 1.5px solid var(--carvao); background: var(--mel); color: var(--carvao); font: 700 13px Montserrat, sans-serif; letter-spacing: .1em; cursor: pointer; text-decoration: none; }
+  .btn.sec { background: transparent; }
+  .nota { max-width: 920px; margin: 8px auto 0; padding: 0 16px; font-size: 12px; color: #3D3A32; }
+  .folha { max-width: 920px; margin: 20px auto 48px; padding: 0 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .etq { background: var(--marfim); border: 1px solid var(--linha); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px; break-inside: avoid; position: relative; overflow: hidden; }
+  .etq .topo { display: flex; justify-content: space-between; align-items: center; }
+  .etq .marca { font-size: 15px; } .etq .marca i { width: 14px; height: 16px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 7px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+  .chip i { width: 8px; height: 9px; background: var(--carvao); display: block; }
+  .etq h2 { margin: 0; font-family: Anton, sans-serif; font-weight: 400; font-size: 28px; line-height: .95; }
+  .etq .quem { font-size: 12px; font-weight: 600; }
+  .etq .corpo { display: flex; gap: 12px; align-items: center; }
+  .qr { width: 118px; height: 118px; flex: none; background: #fff; border-radius: 10px; padding: 7px; border: 1px solid var(--linha); }
+  .qr svg { width: 100%; height: 100%; display: block; }
+  .lado { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .lado small { font-size: 9px; font-weight: 700; letter-spacing: .16em; }
+  .lado b { font-size: 13px; letter-spacing: .04em; word-break: break-all; }
+  .lado span { font-size: 11px; line-height: 1.4; color: #3D3A32; }
+  .canto { position: absolute; right: -36px; top: -36px; width: 96px; height: 110px; opacity: .55; }
+  @media print {
+    @page { size: A4; margin: 10mm; }
+    html, body { background: #fff; }
+    header, .nota { display: none; }
+    .folha { max-width: none; margin: 0; padding: 0; grid-template-columns: repeat(2, 1fr); gap: 6mm; }
+    .etq { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <span class="marca"><i class="hex"></i>ORIGEM</span>
+    <h1>ETIQUETAS<br>QR DOS LOTES</h1>
+    <p>Imprima e cole no pote. Quem apontar a câmera do celular para o código abre a ficha do mel direto no app.</p>
+  </div>
+  <div class="acoes"><button class="btn" type="button" onclick="print()">IMPRIMIR</button><a class="btn sec" href="./">ABRIR O APP</a></div>
+</header>
+<p class="nota" id="nota"></p>
+<main class="folha" id="folha"></main>
+<script>
+/*LIBS*/
+</script>
+<script>
+(function () {
+  var App = window.Origem, base = App.base().replace(/etiquetas\.html$/, '');
+  document.getElementById('nota').textContent = 'Os códigos apontam para ' + base + ' — dados de Produtor A, B e C ainda são ilustrativos.';
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  document.getElementById('folha').innerHTML = App.meis.map(function (m) {
+    var d = App.qrPath(base + '#t=' + m.token, 'M');
+    return '<article class="etq">' +
+      '<span class="canto hex" style="background:' + m.accent + '"></span>' +
+      '<div class="topo"><span class="marca"><i class="hex"></i>ORIGEM</span></div>' +
+      '<span><span class="chip" style="background:' + m.accent + '"><i class="hex"></i>' + esc(m.florada) + '</span></span>' +
+      '<h2>' + esc(m.nomeUp) + '</h2>' +
+      '<span class="quem">' + esc(m.prod) + ' · ' + esc(m.mun) + ' — PR</span>' +
+      '<div class="corpo"><div class="qr"><svg viewBox="0 0 100 100" shape-rendering="crispEdges" role="img" aria-label="QR Code ' + esc(m.token) + '"><path d="' + d + '" fill="#161512"/></svg></div>' +
+      '<div class="lado"><small>TOKEN DO LOTE</small><b>' + esc(m.token) + '</b><span>Escaneie para conhecer quem produziu e de onde veio este mel.</span></div></div>' +
+      '</article>';
+  }).join('');
+})();
+</script>
+</body>
+</html>

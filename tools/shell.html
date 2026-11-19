@@ -50,6 +50,9 @@
 <div id="app"></div>
 <!--TEMPLATES-->
 <script>
+/*LIBS*/
+</script>
+<script>
 /*RUNTIME*/
 </script>
 <script>
@@ -57,6 +60,7 @@ var S = window.__screens;
 window.__FIRST = /*FIRST*/;
 /*SCREENS*/
 window.__start();
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
 </script>
 </body>
 </html>

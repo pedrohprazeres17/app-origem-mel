@@ -1,14 +1,16 @@
-// Gera index.html a partir das telas originais do Claude Design (design/App*.dc.html).
-// Uso: node tools/build.mjs
+// Gera index.html a partir das telas em src/screens/ (V2, derivadas das telas
+// originais do Claude Design guardadas em design/).
+// Uso: npm install && npm run build
 //
-// Cada tela é copiada com o mesmo HTML, estilos e lógica do protótipo. As únicas
+// Cada tela mantém o mesmo HTML, estilos e lógica do protótipo. As únicas
 // adaptações são as necessárias para funcionar como app de verdade no celular:
 //  - a tela deixa de ter 390×844 fixos e ocupa a viewport inteira;
 //  - as faixas reservadas para status bar (54px) e home indicator (34px) viram
 //    áreas seguras do aparelho (env(safe-area-inset-*));
 //  - o conteúdo de <main> rola quando a tela do aparelho é menor que 844px;
 //  - links entre telas (AppXX.dc.html) viram rotas (#AppXX).
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, copyFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -16,10 +18,11 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const designDir = join(root, 'design');
 const canvas = JSON.parse(readFileSync(join(designDir, 'canvas.json'), 'utf8'));
 const files = canvas.order.filter((f) => /^App\d\d\w+\.dc\.html$/.test(f) && canvas.boards[f]?.page === 'app');
-const available = new Set(readdirSync(designDir));
+const screensDir = join(root, 'src', 'screens');
+const available = new Set(readdirSync(screensDir));
 
 const screens = files.filter((f) => available.has(f)).map((f) => {
-  const src = readFileSync(join(designDir, f), 'utf8');
+  const src = readFileSync(join(screensDir, f), 'utf8');
   const id = f.replace('.dc.html', '');
   const title = (src.match(/<title>([^<]*)<\/title>/) || [])[1] || 'Origem';
   let body = src.match(/<x-dc>([\s\S]*?)<\/x-dc>/)[1];
@@ -41,9 +44,6 @@ const screens = files.filter((f) => available.has(f)).map((f) => {
     '<main style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;');
   // Ficha do mel: botões do topo ficavam abaixo da status bar (top:58px = 54 + 4).
   if (id === 'App11Mel') body = body.replace('left:16px;right:16px;top:58px;', 'left:16px;right:16px;top:calc(var(--sat) + 4px);');
-  // Token exibido na busca / no erro passa a ser o token realmente digitado.
-  if (id === 'App08Loading') body = body.replace('>MEL-2026-LAR-00421</span>', '>{{$ctx.loadLabel}}</span>');
-  if (id === 'App10NotFound') body = body.replace('>MEL-2026-LAR-0042<', '>{{$ctx.nfLabel}}<');
   // Links entre telas.
   body = body.replace(/href="(App\w+)\.dc\.html"/g, 'href="#$1"');
   // <sc-for>/<sc-if> viram <template> para o parser do navegador aceitá-los em
@@ -60,11 +60,26 @@ const templates = screens.map((s) => `<template id="t-${s.id}" data-title="${s.t
 const logic = screens.map((s) => `S[${JSON.stringify(s.id)}] = (function () {\n${s.js}\nreturn Component;\n})();`).join('\n\n');
 const runtime = readFileSync(join(root, 'tools', 'runtime.js'), 'utf8');
 const shell = readFileSync(join(root, 'tools', 'shell.html'), 'utf8');
+const qrlib = readFileSync(join(root, 'node_modules', 'qrcode-generator', 'qrcode.js'), 'utf8');
+const data = readFileSync(join(root, 'src', 'data.js'), 'utf8');
+
+// Leitor de QR (carregado só quando a câmera é usada e o navegador não tem BarcodeDetector).
+mkdirSync(join(root, 'vendor'), { recursive: true });
+copyFileSync(join(root, 'node_modules', 'jsqr', 'dist', 'jsQR.js'), join(root, 'vendor', 'jsQR.js'));
 
 const out = shell
   .replace('<!--TEMPLATES-->', () => templates)
+  .replace('/*LIBS*/', () => qrlib + '\n' + data)
   .replace('/*RUNTIME*/', () => runtime)
   .replace('/*SCREENS*/', () => logic)
   .replace('/*FIRST*/', () => JSON.stringify(screens[0].id));
 writeFileSync(join(root, 'index.html'), out);
-console.log('index.html gerado com ' + screens.length + ' telas: ' + screens.map((s) => s.id).join(', '));
+
+// Etiquetas com QR Code para imprimir e colar nos potes.
+const labels = readFileSync(join(root, 'tools', 'etiquetas.html'), 'utf8').replace('/*LIBS*/', () => qrlib + '\n' + data);
+writeFileSync(join(root, 'etiquetas.html'), labels);
+
+// Service worker: versão muda sempre que o app muda.
+const version = createHash('sha1').update(out).update(readFileSync(join(root, 'tools', 'sw.js'), 'utf8')).digest('hex').slice(0, 10);
+writeFileSync(join(root, 'sw.js'), readFileSync(join(root, 'tools', 'sw.js'), 'utf8').replace('__VERSION__', version));
+console.log('index.html gerado com ' + screens.length + ' telas (v' + version + '): ' + screens.map((s) => s.id).join(', '));
