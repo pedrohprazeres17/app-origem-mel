@@ -22,28 +22,17 @@
   .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 999px; border: 1.5px solid var(--carvao); background: var(--mel); color: var(--carvao); font: 700 13px Montserrat, sans-serif; letter-spacing: .1em; cursor: pointer; text-decoration: none; }
   .btn.sec { background: transparent; }
   .nota { max-width: 920px; margin: 8px auto 0; padding: 0 16px; font-size: 12px; color: #3D3A32; }
-  .folha { max-width: 920px; margin: 20px auto 48px; padding: 0 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
-  .etq { background: var(--marfim); border: 1px solid var(--linha); border-radius: 18px; padding: 14px; display: flex; flex-direction: column; gap: 10px; break-inside: avoid; position: relative; overflow: hidden; }
-  .etq .topo { display: flex; justify-content: space-between; align-items: center; }
-  .etq .marca { font-size: 15px; } .etq .marca i { width: 14px; height: 16px; }
-  .chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px 4px 7px; border-radius: 999px; font-size: 11px; font-weight: 700; }
-  .chip i { width: 8px; height: 9px; background: var(--carvao); display: block; }
-  .etq h2 { margin: 0; font-family: Anton, sans-serif; font-weight: 400; font-size: 28px; line-height: .95; }
-  .etq .quem { font-size: 12px; font-weight: 600; }
-  .etq .corpo { display: flex; gap: 12px; align-items: center; }
-  .qr { width: 118px; height: 118px; flex: none; background: #fff; border-radius: 10px; padding: 7px; border: 1px solid var(--linha); }
-  .qr svg { width: 100%; height: 100%; display: block; }
-  .lado { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-  .lado small { font-size: 9px; font-weight: 700; letter-spacing: .16em; }
-  .lado b { font-size: 13px; letter-spacing: .04em; word-break: break-all; }
-  .lado span { font-size: 11px; line-height: 1.4; color: #3D3A32; }
-  .canto { position: absolute; right: -36px; top: -36px; width: 96px; height: 110px; opacity: .55; }
+  .folha { max-width: 920px; margin: 20px auto 48px; padding: 0 16px; display: flex; flex-direction: column; gap: 16px; }
+  .prev { width: 100%; max-width: 680px; aspect-ratio: 3 / 1; position: relative; overflow: hidden; border-radius: 12px; box-shadow: 0 0 0 1px #E6DFC4; background: #FFFCF1; }
+  .prev .etq-pote { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
   @media print {
-    @page { size: A4; margin: 10mm; }
+    @page { size: A4 portrait; margin: 12mm 15mm; }
     html, body { background: #fff; }
     header, .nota { display: none; }
-    .folha { max-width: none; margin: 0; padding: 0; grid-template-columns: repeat(2, 1fr); gap: 6mm; }
-    .etq { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .folha { max-width: none; margin: 0; padding: 0; display: block; }
+    .prev { max-width: none; width: auto; aspect-ratio: auto; border-radius: 0; box-shadow: none; overflow: visible; margin: 0 auto 6mm; break-inside: avoid; page-break-inside: avoid; }
+    .prev:nth-child(4n) { break-after: page; page-break-after: always; }
+    .prev .etq-pote { position: static; transform: none !important; margin: 0 auto; outline: .2mm dashed #D9D1B4; }
   }
 </style>
 </head>
@@ -51,8 +40,8 @@
 <header>
   <div>
     <span class="marca"><i class="hex"></i>ORIGEM</span>
-    <h1>ETIQUETAS<br>QR DOS LOTES</h1>
-    <p>Imprima e cole no pote. Quem apontar a câmera do celular para o código abre a ficha do mel direto no app.</p>
+    <h1>ETIQUETAS<br>DOS POTES</h1>
+    <p>Modelo de 180 × 60 mm para dar a volta no pote, 4 por folha A4. Quem apontar a câmera do celular para o QR Code abre a ficha do mel direto no app.</p>
   </div>
   <div class="acoes"><button class="btn" type="button" onclick="print()">IMPRIMIR</button><a class="btn sec" href="./">ABRIR O APP</a></div>
 </header>
@@ -66,18 +55,17 @@
   var App = window.Origem, base = App.base().replace(/etiquetas\.html$/, '');
   document.getElementById('nota').textContent = 'Os códigos apontam para ' + base + ' — dados de Produtor A, B e C ainda são ilustrativos.';
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-  document.getElementById('folha').innerHTML = App.meis.map(function (m) {
-    var d = App.qrPath(base + '#t=' + m.token, 'M');
-    return '<article class="etq">' +
-      '<span class="canto hex" style="background:' + m.accent + '"></span>' +
-      '<div class="topo"><span class="marca"><i class="hex"></i>ORIGEM</span></div>' +
-      '<span><span class="chip" style="background:' + m.accent + '"><i class="hex"></i>' + esc(m.florada) + '</span></span>' +
-      '<h2>' + esc(m.nomeUp) + '</h2>' +
-      '<span class="quem">' + esc(m.prod) + ' · ' + esc(m.mun) + ' — PR</span>' +
-      '<div class="corpo"><div class="qr"><svg viewBox="0 0 100 100" shape-rendering="crispEdges" role="img" aria-label="QR Code ' + esc(m.token) + '"><path d="' + d + '" fill="#161512"/></svg></div>' +
-      '<div class="lado"><small>TOKEN DO LOTE</small><b>' + esc(m.token) + '</b><span>Escaneie para conhecer quem produziu e de onde veio este mel.</span></div></div>' +
-      '</article>';
+  var folha = document.getElementById('folha');
+  folha.innerHTML = App.meis.map(function (m) {
+    return '<div class="prev" role="img" aria-label="Etiqueta de ' + esc(m.nome) + ', ' + esc(m.token) + '">' + App.labelHTML(m, base + '#t=' + m.token) + '</div>';
   }).join('');
+  function fit() {
+    Array.prototype.forEach.call(folha.querySelectorAll('.prev'), function (box) {
+      var el = box.firstElementChild; el.style.transform = 'scale(' + box.clientWidth / el.offsetWidth + ')';
+    });
+  }
+  fit(); window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
 })();
 </script>
 </body>

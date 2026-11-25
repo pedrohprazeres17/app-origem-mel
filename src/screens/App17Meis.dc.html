@@ -23,10 +23,10 @@
 <span aria-live="polite" style="font-size:11px;font-weight:700;letter-spacing:.1em">{{count}}</span>
 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
 <sc-for list="{{lista}}" as="m" hint-placeholder-count="4">
-<a href="#App11Mel/{{m.id}}" style="background:#FFFFFF;border:1px solid #E6DFC4;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:#161512">
+<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><a href="#App11Mel/{{m.id}}" style="flex:1;background:#FFFFFF;border:1px solid #E6DFC4;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:#161512">
 <span style="height:92px;background:{{m.tint}};display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;box-sizing:border-box;position:relative"><span style="position:absolute;top:8px;left:8px;width:13px;height:15px;background:{{m.accent}};display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span><svg viewBox="0 0 120 160" width="56" height="75" aria-hidden="true" style="position:relative;flex:none"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="{{m.accent}}"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path></svg></span>
 <span style="padding:9px 10px 11px;display:flex;flex-direction:column;gap:3px"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:16px;line-height:1">{{m.nomeUp}}</b><span style="font-size:11px;font-weight:600">{{m.prod}}</span><span style="font-size:10px;color:#5E5A4E">{{m.mun}}</span><span style="align-self:flex-start;margin-top:3px;background:{{m.accent}};padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700">{{m.florada}}</span></span>
-</a>
+</a><sc-if value="{{m.rev}}" hint-placeholder-val="{{ false }}"><a href="#App26Etiqueta/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 12px;border:1.5px solid #161512;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-decoration:none;color:#161512;background:#FFDE59"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>FAZER ETIQUETA</a></sc-if></div>
 </sc-for>
 </div>
 </div>
@@ -39,13 +39,12 @@
 class Component extends DCLogic {
   constructor(p) { super(p); this.state = { cat: 'Florada', f: { Florada: 'Todas', Origem: 'Todas', Produtor: 'Todos', 'Características': 'Todas' }, q: '' }; }
   renderVals() {
-    const M = [
-      { id: 'lar', nome: 'Mel de Laranjeira', florada: 'Laranjeira', prod: 'Produtor A', mun: 'São José dos Pinhais', cor: 'Clara', perfil: 'Suave', crist: 'Variável', colheita: 'Novembro / 2026', token: 'MEL-2026-LAR-00421', accent: '#F6DC6B', tint: '#FFF7D1' },
-      { id: 'mulb', nome: 'Mel Multifloral', florada: 'Multifloral', prod: 'Produtor B', mun: 'Colombo', cor: 'Âmbar', perfil: 'Marcante', crist: 'Não informado', colheita: 'Não informado', token: 'MEL-2026-MUL-00388', accent: '#E9A23B', tint: '#FCEBD0' },
-      { id: 'euc', nome: 'Mel de Eucalipto', florada: 'Eucalipto', prod: 'Produtor C', mun: 'Mandirituba', cor: 'Âmbar', perfil: 'Intenso', crist: 'Variável', colheita: 'Não informado', token: 'MEL-2026-EUC-00157', accent: '#C2C76E', tint: '#F3F3D8' },
-      { id: 'mula', nome: 'Mel Multifloral', florada: 'Multifloral', prod: 'Produtor A', mun: 'São José dos Pinhais', cor: 'Variável', perfil: 'Variável', crist: 'Não informado', colheita: 'Não informado', token: 'MEL-2026-MUL-00402', accent: '#E9A23B', tint: '#FCEBD0' }
-    ];
-    const O = { Florada: ['Todas', 'Laranjeira', 'Eucalipto', 'Multifloral'], Origem: ['Todas', 'São José dos Pinhais', 'Colombo', 'Mandirituba'], Produtor: ['Todos', 'Produtor A', 'Produtor B', 'Produtor C'], 'Características': ['Todas', 'Clara', 'Âmbar', 'Suave', 'Intenso'] };
+    const M = Origem.meis;
+    const more = (base, vals, skip) => base.concat(vals.filter((v, i) => vals.indexOf(v) === i && base.indexOf(v) < 0 && (skip || []).indexOf(v) < 0));
+    const O = { Florada: more(['Todas', 'Laranjeira', 'Eucalipto', 'Multifloral'], M.map((m) => m.florada)),
+      Origem: more(['Todas', 'São José dos Pinhais', 'Colombo', 'Mandirituba'], M.map((m) => m.mun)),
+      Produtor: more(['Todos', 'Produtor A', 'Produtor B', 'Produtor C'], M.map((m) => m.prod)),
+      'Características': more(['Todas', 'Clara', 'Âmbar', 'Suave', 'Intenso'], M.map((m) => m.cor).concat(M.map((m) => m.perfil)), ['Variável', 'Marcante', Origem.NI]) };
     const { cat, f, q } = this.state;
     const base = 'display:inline-flex;align-items:center;gap:5px;border-radius:12px;padding:0 13px;min-height:44px;font:700 13px Montserrat,sans-serif;flex:none;cursor:pointer;';
     const isAll = (x) => x === 'Todas' || x === 'Todos';
@@ -56,7 +55,8 @@ class Component extends DCLogic {
     const ok = (m) => (isAll(f.Florada) || m.florada === f.Florada) && (isAll(f.Origem) || m.mun === f.Origem) && (isAll(f.Produtor) || m.prod === f.Produtor) &&
       (isAll(f['Características']) || m.cor === f['Características'] || m.perfil === f['Características']) &&
       (!q || (m.nome + ' ' + m.prod + ' ' + m.mun).toLowerCase().indexOf(q.toLowerCase()) > -1);
-    const lista = M.filter(ok).map((m) => ({ ...m, nomeUp: m.nome.toUpperCase() }));
+    const rev = !!Origem.rev();
+    const lista = M.filter(ok).map((m) => ({ ...m, rev }));
     return { cats, opts, lista, q, setQ: (e) => this.setState({ q: e.target.value }), count: lista.length === 0 ? 'NENHUM MEL COM ESSES FILTROS' : lista.length + (lista.length === 1 ? ' MEL' : ' MÉIS') };
   }
 }

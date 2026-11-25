@@ -92,7 +92,7 @@
     var kids = [];
     renderInto(kidsOf(n), scope, kids);
     for (var k = 0; k < kids.length; k++) el.appendChild(kids[k]);
-    if (tag === 'select' && el.__value != null) el.value = el.__value;
+    if ((tag === 'select' || tag === 'textarea') && el.__value != null) el.value = el.__value;
     out.push(el);
   }
 
@@ -110,7 +110,7 @@
       else live.setAttribute(na[i].name, na[i].value);
     }
     live.__h = next.__h;
-    morphChildren(live, next);
+    if (!live.hasAttribute('data-raw')) morphChildren(live, next); // data-raw: conteúdo gerenciado pela tela
     if (next.__value != null && live.value !== next.__value) live.value = next.__value;
   }
   function morphChildren(live, next) {

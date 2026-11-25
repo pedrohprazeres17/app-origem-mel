@@ -44,10 +44,24 @@
       border-radius: 44px; box-shadow: 0 0 0 10px #161512, 0 30px 80px rgba(22, 21, 18, .35);
     }
   }
+  #app textarea:focus-visible, #app select:focus-visible { outline: none; }
+
+  /* Impressão da etiqueta do pote (180 × 60 mm, tamanho real). */
+  #print-area { display: none; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 15mm; }
+    html, body { background: #fff !important; height: auto; }
+    #app { display: none !important; }
+    #print-area { display: block; }
+    #print-area .etq-pote { margin: 0 auto 6mm; outline: .2mm dashed #D9D1B4; break-inside: avoid; page-break-inside: avoid; }
+    #print-area .etq-pote:nth-child(4n) { break-after: page; page-break-after: always; }
+    #print-area .etq-pote:last-child { break-after: auto; page-break-after: auto; }
+  }
 </style>
 </head>
 <body>
 <div id="app"></div>
+<div id="print-area" aria-hidden="true"></div>
 <template id="t-App01Splash" data-title="Splash — Origem">
 <div style="width:100%;height:100%;box-sizing:border-box;background:#FFF0B6;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
 <div aria-hidden="true" style="height:var(--sat);flex:none"></div>
@@ -146,11 +160,16 @@
 <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:6px"><h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:22px;line-height:1;">MÉIS DISPONÍVEIS</h2><a href="#App17Meis" style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#161512;padding:8px 0">Ver todos →</a></div>
 <div style="display:flex;gap:12px;overflow-x:auto;margin:0 -20px;padding:0 20px">
 <template data-sc="for" list="{{meis}}" as="m" hint-placeholder-count="3">
-<a href="#App11Mel/{{m.id}}" style="width:222px;flex:none;background:#FFFFFF;border:1px solid #E6DFC4;border-radius:18px;overflow:hidden;text-decoration:none;color:#161512;display:flex;flex-direction:column">
+<template data-sc="if" value="{{m.notRev}}" hint-placeholder-val="{{ true }}"><a href="#App11Mel/{{m.id}}" style="width:222px;flex:none;background:#FFFFFF;border:1px solid #E6DFC4;border-radius:18px;overflow:hidden;text-decoration:none;color:#161512;display:flex;flex-direction:column">
 <span style="height:100px;background:{{m.tint}};display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;box-sizing:border-box;position:relative"><span style="position:absolute;left:10px;top:10px;width:16px;height:18px;background:{{m.accent}};display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span><svg viewBox="0 0 120 160" width="62" height="83" aria-hidden="true" style="position:relative;flex:none"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="{{m.accent}}"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path></svg></span>
 <span style="padding:11px 12px 13px;display:flex;flex-direction:column;gap:3px"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:19px;line-height:1">{{m.nomeUp}}</b><span style="font-size:12px;font-weight:600">{{m.prod}}</span><span style="font-size:11px;color:#5E5A4E">{{m.mun}} — PR</span>
 <span style="display:flex;gap:4px;flex-wrap:wrap;margin-top:5px"><span style="background:{{m.accent}};padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700">{{m.florada}}</span><span style="border:1px solid #161512;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600">{{m.cor}}</span><span style="border:1px solid #161512;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600">{{m.perfil}}</span></span></span>
-</a>
+</a></template>
+<template data-sc="if" value="{{m.rev}}" hint-placeholder-val="{{ false }}"><div style="width:222px;flex:none;display:flex;flex-direction:column;gap:6px"><a href="#App11Mel/{{m.id}}" style="flex:1;background:#FFFFFF;border:1px solid #E6DFC4;border-radius:18px;overflow:hidden;text-decoration:none;color:#161512;display:flex;flex-direction:column">
+<span style="height:100px;background:{{m.tint}};display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;box-sizing:border-box;position:relative"><span style="position:absolute;left:10px;top:10px;width:16px;height:18px;background:{{m.accent}};display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span><svg viewBox="0 0 120 160" width="62" height="83" aria-hidden="true" style="position:relative;flex:none"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="{{m.accent}}"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path></svg></span>
+<span style="padding:11px 12px 13px;display:flex;flex-direction:column;gap:3px"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:19px;line-height:1">{{m.nomeUp}}</b><span style="font-size:12px;font-weight:600">{{m.prod}}</span><span style="font-size:11px;color:#5E5A4E">{{m.mun}} — PR</span>
+<span style="display:flex;gap:4px;flex-wrap:wrap;margin-top:5px"><span style="background:{{m.accent}};padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700">{{m.florada}}</span><span style="border:1px solid #161512;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600">{{m.cor}}</span><span style="border:1px solid #161512;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:600">{{m.perfil}}</span></span></span>
+</a><template data-sc="if" value="{{m.rev}}" hint-placeholder-val="{{ false }}"><a href="#App26Etiqueta/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 12px;border:1.5px solid #161512;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-decoration:none;color:#161512;background:#FFDE59"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>FAZER ETIQUETA</a></template></div></template>
 </template>
 </div>
 <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:4px"><h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:22px;line-height:1;">APRENDA SOBRE MEL</h2><a href="#App20Entenda" style="font-size:12px;font-weight:700;letter-spacing:.06em;color:#161512;padding:8px 0">Ver guia →</a></div>
@@ -159,6 +178,7 @@
 <a href="#App20Entenda/1" style="width:150px;flex:none;background:#FFF0B6;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#161512"><span style="width:28px;height:32px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3"></circle><circle cx="16.8" cy="10.5" r="3"></circle><circle cx="15" cy="16" r="3"></circle><circle cx="9" cy="16" r="3"></circle><circle cx="7.2" cy="10.5" r="3"></circle></svg></span><b style="font-size:13px;line-height:1.25">O que é florada?</b></a>
 <a href="#App20Entenda/2" style="width:150px;flex:none;background:#FFF0B6;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#161512"><span style="width:28px;height:32px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 4a8 8 0 0 1 0 16z" fill="#161512"></path></svg></span><b style="font-size:13px;line-height:1.25">Por que a cor muda?</b></a>
 </div>
+<a href="{{revHref}}" style="display:flex;align-items:center;gap:12px;background:#161512;color:#FFFCF1;border-radius:18px;padding:14px 14px 14px 16px;text-decoration:none;margin:4px 0 16px"><span style="width:40px;height:46px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></span><span style="flex:1;display:flex;flex-direction:column;gap:3px"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:19px;line-height:1">ÁREA DO REVENDEDOR</b><span style="font-size:12px;line-height:1.4;color:#D9D1B4">{{revText}}</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FFFCF1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a>
 </div>
 </main>
 <nav aria-label="Navegação principal" style="height:var(--nav-h);flex:none;box-sizing:border-box;border-top:1px solid #E6DFC4;background:#FFFCF1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;padding:6px 6px var(--sab);position:relative;z-index:3"><a href="#App05Home" aria-current="page" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#161512;font-size:10px;font-weight:700;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-6 8 6v9H4z"></path><path d="M10 20v-5h4v5"></path></svg>Início<span style="width:6px;height:7px;background:#FFDE59;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="#App17Meis" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg>Méis<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="#App06Scanner" aria-label="Escanear QR Code" style="display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:-30px;text-decoration:none;color:#161512;font-size:10px;font-weight:700"><span style="width:66px;height:76px;background:#161512;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><span style="width:58px;height:67px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"></path><path d="M7 12h10"></path></svg></span></span>SCAN</a><a href="#App18Produtores" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg>Produtores<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="#App21Salvos" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"></path></svg>Salvos<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a></nav>
@@ -292,7 +312,7 @@
 <span style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#161512" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"></path><circle cx="12" cy="10" r="2.2"></circle></svg>{{m.mun}} — Paraná</span>
 <a href="#App14TokenInfo/{{m.id}}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:#FFF0B6;border-radius:10px;padding:0 12px;min-height:36px;text-decoration:none;color:#161512;font-size:13px;font-weight:600;letter-spacing:.05em"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM18 14h2M14 18h2"></path></svg>{{m.token}}<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a>
 <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:6px;background:{{m.accent}};padding:5px 11px 5px 8px;border-radius:999px;font-size:12px;font-weight:700;color:#161512"><span style="width:9px;height:10px;background:#161512;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span>{{m.florada}}</span><span style="border:1px solid #161512;color:#161512;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:600">{{m.cor}}</span><span style="border:1px solid #161512;color:#161512;padding:4px 11px;border-radius:999px;font-size:12px;font-weight:600">{{m.perfil}}</span></div>
-<a href="#App16Comparar/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;margin-top:4px"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5"></rect><rect x="14" y="4" width="7" height="16" rx="1.5"></rect></svg>COMPARAR COM OUTRO MEL</a>
+<a href="#App16Comparar/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;margin-top:4px"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5"></rect><rect x="14" y="4" width="7" height="16" rx="1.5"></rect></svg>COMPARAR COM OUTRO MEL</a><template data-sc="if" value="{{rev}}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px"><a href="#App25Editar/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;font-size:12px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg>EDITAR</a><a href="#App26Etiqueta/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;background:#FFDE59;color:#161512;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;font-size:12px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>ETIQUETA</a></div></template>
 <a href="#App12Resumo/{{m.id}}" style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;text-decoration:none;color:#161512;min-height:44px"><h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:22px;line-height:1;">ESTE MEL EM RESUMO</h2><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>
 </div>
 </main>
@@ -345,7 +365,7 @@
 <div style="padding:4px 20px 0;display:flex;flex-direction:column;gap:14px">
 <h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:40px;line-height:.92;">DETALHES<br>DE ORIGEM</h1>
 <div style="background:#FFF0B6;border-radius:18px;padding:14px 14px 14px 16px;display:flex;align-items:center;gap:10px"><span style="flex:1;display:flex;flex-direction:column;gap:4px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;font-size:9px">TOKEN</span><span style="font-size:19px;font-weight:700;letter-spacing:.05em;font-variant-numeric:tabular-nums">{{m.token}}</span></span><button type="button" onClick="{{copy}}" aria-label="Copiar token" style="{{copyStyle}}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg>{{copyText}}</button></div>
-<dl style="margin:0;display:flex;flex-direction:column;border-bottom:1px solid #E6DFC4"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">PRODUTO</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">{{m.nome}}</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">PRODUTOR</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">{{m.prod}}</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">MUNICÍPIO</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">{{m.mun}} — PR</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">LOTE</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">{{m.lote}}</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">COLHEITA</dt><dd style="{{colheitaStyle}}">{{m.colheitaLonga}}</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">CADASTRADO POR</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">Revendedor responsável</dd></div></dl>
+<dl style="margin:0;display:flex;flex-direction:column;border-bottom:1px solid #E6DFC4"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">PRODUTO</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">{{m.nome}}</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">PRODUTOR</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">{{m.prod}}</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">MUNICÍPIO</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">{{m.mun}} — PR</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">LOTE</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">{{m.lote}}</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">COLHEITA</dt><dd style="{{colheitaStyle}}">{{m.colheitaLonga}}</dd></div><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:42px;border-top:1px solid #E6DFC4"><dt style="font-size:10px;font-weight:700;letter-spacing:.14em">CADASTRADO POR</dt><dd style="margin:0;font-size:14px;font-weight:600;text-align:right">{{m.cadastradoPor}}</dd></div></dl>
 <span style="font-size:12px;color:#5E5A4E">Última atualização: {{m.atualizado}}</span>
 <div style="display:flex;gap:14px;align-items:center;background:#FFFFFF;border:1px solid #E6DFC4;border-radius:18px;padding:12px"><span style="width:104px;height:104px;background:#FFFCF1;border:1px solid #E6DFC4;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none;box-sizing:border-box"><svg viewBox="0 0 100 100" width="86" height="86" role="img" aria-label="QR Code do lote {{m.token}}" shape-rendering="crispEdges"><path d="{{qr}}" fill="#161512"></path></svg></span><span style="flex:1;display:flex;flex-direction:column;gap:7px;align-items:flex-start;min-width:0"><span style="font-size:9px;font-weight:700;letter-spacing:.16em">QR CODE DESTE LOTE</span><span style="font-size:12px;line-height:1.45;color:#3D3A32">Aponte a câmera de outro celular para abrir esta ficha.</span><button type="button" onClick="{{share}}" style="{{shareStyle}}"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5"></path><path d="M5 12v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-7"></path></svg>{{shareText}}</button></span></div>
 <div style="border:1.5px dashed #A69E80;border-radius:16px;padding:12px 14px;display:flex;gap:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg><span style="font-size:12px;line-height:1.5;color:#3D3A32">O token indica que este código está associado a um cadastro existente no sistema. <b style="color:#161512">Não é uma certificação oficial.</b> Informações sobre qualidade e regularização devem vir de fontes apropriadas.</span></div>
@@ -392,10 +412,10 @@
 <span aria-live="polite" style="font-size:11px;font-weight:700;letter-spacing:.1em">{{count}}</span>
 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
 <template data-sc="for" list="{{lista}}" as="m" hint-placeholder-count="4">
-<a href="#App11Mel/{{m.id}}" style="background:#FFFFFF;border:1px solid #E6DFC4;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:#161512">
+<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><a href="#App11Mel/{{m.id}}" style="flex:1;background:#FFFFFF;border:1px solid #E6DFC4;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:#161512">
 <span style="height:92px;background:{{m.tint}};display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;box-sizing:border-box;position:relative"><span style="position:absolute;top:8px;left:8px;width:13px;height:15px;background:{{m.accent}};display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span><svg viewBox="0 0 120 160" width="56" height="75" aria-hidden="true" style="position:relative;flex:none"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="{{m.accent}}"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path></svg></span>
 <span style="padding:9px 10px 11px;display:flex;flex-direction:column;gap:3px"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:16px;line-height:1">{{m.nomeUp}}</b><span style="font-size:11px;font-weight:600">{{m.prod}}</span><span style="font-size:10px;color:#5E5A4E">{{m.mun}}</span><span style="align-self:flex-start;margin-top:3px;background:{{m.accent}};padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700">{{m.florada}}</span></span>
-</a>
+</a><template data-sc="if" value="{{m.rev}}" hint-placeholder-val="{{ false }}"><a href="#App26Etiqueta/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 12px;border:1.5px solid #161512;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-decoration:none;color:#161512;background:#FFDE59"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>FAZER ETIQUETA</a></template></div>
 </template>
 </div>
 </div>
@@ -567,6 +587,108 @@
 </main>
 <nav aria-label="Navegação principal" style="height:var(--nav-h);flex:none;box-sizing:border-box;border-top:1px solid #E6DFC4;background:#FFFCF1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;padding:6px 6px var(--sab);position:relative;z-index:3"><a href="#App05Home" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-6 8 6v9H4z"></path><path d="M10 20v-5h4v5"></path></svg>Início<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="#App17Meis" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg>Méis<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="#App06Scanner" aria-label="Escanear QR Code" style="display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:-30px;text-decoration:none;color:#161512;font-size:10px;font-weight:700"><span style="width:66px;height:76px;background:#161512;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><span style="width:58px;height:67px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"></path><path d="M7 12h10"></path></svg></span></span>SCAN</a><a href="#App18Produtores" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg>Produtores<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="#App21Salvos" aria-current="page" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#161512;font-size:10px;font-weight:700;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"></path></svg>Salvos<span style="width:6px;height:7px;background:#FFDE59;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a></nav>
 
+</div>
+</template>
+<template id="t-App23Login" data-title="Entrar — Área do revendedor">
+<div style="width:100%;height:100%;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:var(--sat);flex:none"></div><header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="#App05Home" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em">ÁREA DO REVENDEDOR</span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"></div></header><main style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;position:relative;display:flex;flex-direction:column">
+<div style="padding:4px 20px 0;display:flex;flex-direction:column;gap:16px;flex:1">
+<span style="width:56px;height:65px;background:#FFF0B6;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#161512" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg></span>
+<div style="display:flex;flex-direction:column;gap:10px"><h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:44px;line-height:.92;">ENTRAR</h1><p style="margin:0;font-size:15px;line-height:1.5;font-weight:500">Acesse para editar os méis cadastrados e fazer as etiquetas dos lotes.</p></div>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">E-MAIL</span>
+<span style="display:flex;align-items:center;border:2px solid #161512;border-radius:16px;min-height:56px;padding:0 16px;background:#FFFFFF;gap:2px"><input type="email" value="{{email}}" onChange="{{setEmail}}" onKeyDown="{{key}}" placeholder="voce@exemplo.com" autocomplete="username" autocapitalize="off" spellcheck="false" enterkeyhint="next" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:600 16px Montserrat,sans-serif;color:#161512"></span></label>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">SENHA</span>
+<span style="display:flex;align-items:center;border:2px solid #161512;border-radius:16px;min-height:56px;padding:0 16px;background:#FFFFFF;gap:2px"><input type="{{senhaType}}" value="{{senha}}" onChange="{{setSenha}}" onKeyDown="{{key}}" placeholder="••••••" autocomplete="current-password" enterkeyhint="go" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:600 16px Montserrat,sans-serif;color:#161512"><button type="button" onClick="{{toggleSenha}}" aria-label="{{senhaLabel}}" style="background:transparent;border:0;font:700 11px Montserrat,sans-serif;letter-spacing:.06em;color:#161512;min-height:44px;padding:0 0 0 8px;cursor:pointer">{{senhaBtn}}</button></span></label>
+<template data-sc="if" value="{{erro}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px;font-weight:600;background:#FFF0B6;border-radius:12px;padding:10px 12px">{{erro}}</span></template>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span style="font-size:13px;color:#5E5A4E">Demonstração: <b style="color:#161512">qualquer e-mail e senha</b></span><button type="button" onClick="{{demo}}" style="background:transparent;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.06em;text-decoration:underline;color:#161512;min-height:44px;cursor:pointer">USAR</button></div>
+<button type="button" onClick="{{entrar}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;background:#FFDE59;color:#161512;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;border:0;font-family:Montserrat,sans-serif;width:100%;cursor:pointer;">ENTRAR</button>
+<div style="margin-top:auto;margin-bottom:8px;background:#FFF0B6;border-radius:18px;padding:14px;display:flex;gap:14px;align-items:center">
+<span aria-hidden="true" style="width:44px;height:51px;background:#FFFCF1;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></span>
+<span style="display:flex;flex-direction:column;gap:3px"><b style="font-size:14px">Versão de demonstração</b><span style="font-size:12px;line-height:1.45;color:#3D3A32">Não há servidor: o acesso e as alterações ficam salvos só neste aparelho.</span></span></div>
+</div>
+</main>
+<div aria-hidden="true" style="height:var(--sab);flex:none"></div>
+</div>
+</template>
+<template id="t-App24Painel" data-title="Seus méis — Área do revendedor">
+<div style="width:100%;height:100%;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:var(--sat);flex:none"></div><header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="#App05Home" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em">ÁREA DO REVENDEDOR</span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"><button type="button" onClick="{{sair}}" aria-label="Sair da área do revendedor" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4"></path><path d="M10 16l-4-4 4-4M6 12h10"></path></svg></button></div></header><main style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;position:relative;display:flex;flex-direction:column">
+<div style="padding:6px 20px 0;display:flex;flex-direction:column;gap:12px">
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:46px;line-height:.92;">SEUS MÉIS</h1>
+<span style="font-size:13px;color:#3D3A32">Conectado como <b style="color:#161512">{{email}}</b>.</span>
+<span aria-live="polite" style="font-size:11px;font-weight:700;letter-spacing:.1em">{{count}}</span>
+<template data-sc="for" list="{{lista}}" as="m" hint-placeholder-count="4">
+<div style="background:#FFFFFF;border:1px solid #E6DFC4;border-radius:18px;padding:10px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;gap:12px;align-items:center">
+<span style="width:62px;height:74px;border-radius:12px;background:{{m.tint}};display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;box-sizing:border-box;flex:none"><svg viewBox="0 0 120 160" width="40" height="53" aria-hidden="true" style="position:relative;flex:none"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="{{m.accent}}"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path></svg></span>
+<span style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:19px;line-height:1">{{m.nomeUp}}</b><span style="font-size:12px;font-weight:600">{{m.prod}} · {{m.munS}}</span><span style="font-size:11px;color:#5E5A4E">Lote {{m.lote}} · atualizado em {{m.atualizado}}</span></span>
+<template data-sc="if" value="{{m.badge}}" hint-placeholder-val="{{ false }}"><span style="align-self:flex-start;background:#FFF0B6;border-radius:999px;padding:3px 8px;font-size:9px;font-weight:700;letter-spacing:.12em">{{m.badge}}</span></template>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
+<a href="#App25Editar/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 10px;border:1.5px solid #161512;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-decoration:none;color:#161512;box-sizing:border-box;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg>EDITAR</a>
+<a href="#App26Etiqueta/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 10px;border:1.5px solid #161512;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-decoration:none;color:#161512;box-sizing:border-box;background:#FFDE59"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>ETIQUETA</a>
+<a href="#App11Mel/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 10px;border:1.5px solid #161512;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-decoration:none;color:#161512;box-sizing:border-box;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="2.6"></circle></svg>VER</a>
+</div>
+</div>
+</template>
+<a href="#App25Editar/novo" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>CADASTRAR NOVO MEL</a>
+<div style="border:1.5px dashed #A69E80;border-radius:16px;padding:12px 14px;display:flex;gap:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg><span style="font-size:12px;line-height:1.5;color:#3D3A32">Versão de demonstração: as alterações ficam salvas só neste aparelho e aparecem no app para quem usar este celular.</span></div>
+<button type="button" onClick="{{reset}}" style="{{resetStyle}}">{{resetText}}</button>
+<span aria-hidden="true" style="height:12px;flex:none"></span>
+</div>
+</main>
+<div aria-hidden="true" style="height:var(--sab);flex:none"></div>
+</div>
+</template>
+<template id="t-App25Editar" data-title="Editar mel — Área do revendedor">
+<div style="width:100%;height:100%;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:var(--sat);flex:none"></div><header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="#App24Painel" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em">{{titulo}}</span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"></div></header><main style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;position:relative;display:flex;flex-direction:column">
+<div style="padding:4px 20px 0;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:14px;align-items:center">
+<span style="width:84px;height:100px;border-radius:12px;background:{{p.tint}};display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;box-sizing:border-box;flex:none;transition:background .3s ease"><svg viewBox="0 0 120 160" width="58" height="77" aria-hidden="true" style="position:relative;flex:none"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="{{p.accent}}"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path></svg></span>
+<div style="display:flex;flex-direction:column;gap:8px;min-width:0"><h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:34px;line-height:.92;">{{p.l1}}<br>{{p.l2}}</h1>
+<span style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:#FFF0B6;border-radius:10px;padding:0 10px;min-height:32px;font-size:12px;font-weight:600;letter-spacing:.05em">{{p.token}}</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">FLORADA</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><template data-sc="for" list="{{floradas}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></template></div></div>
+<template data-sc="if" value="{{outra}}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;border:2px solid #161512;border-radius:16px;min-height:56px;padding:0 16px;background:#FFFFFF;gap:2px"><input value="{{outraTxt}}" onChange="{{setOutra}}" placeholder="Nome da florada (ex.: Silvestre)" aria-label="Nome da florada" maxlength="18" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:600 16px Montserrat,sans-serif;color:#161512"></span></template>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">PRODUTOR</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><template data-sc="for" list="{{produtores}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></template></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">MUNICÍPIO</span><span style="display:flex;align-items:center;border:2px solid #161512;border-radius:16px;min-height:56px;padding:0 16px;background:#FFFFFF;gap:2px"><input value="{{mun}}" onChange="{{setMun}}" placeholder="Município" aria-label="Município" maxlength="40" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:600 16px Montserrat,sans-serif;color:#161512"><b style="font-size:14px;color:#5E5A4E">— PR</b></span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">COR</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><template data-sc="for" list="{{cores}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></template></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">PERFIL</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><template data-sc="for" list="{{perfis}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></template></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">CRISTALIZAÇÃO</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><template data-sc="for" list="{{crists}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></template></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">COLHEITA</span><div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px"><select value="{{mes}}" onChange="{{setMes}}" aria-label="Mês da colheita" style="font:600 14px Montserrat,sans-serif;color:#161512;background:#FFFFFF;border:2px solid #161512;border-radius:16px;padding:0 12px;min-height:56px;width:100%"><template data-sc="for" list="{{meses}}" as="o" hint-placeholder-count="13"><option value="{{o.v}}">{{o.t}}</option></template></select><select value="{{ano}}" onChange="{{setAno}}" aria-label="Ano da colheita" style="font:600 14px Montserrat,sans-serif;color:#161512;background:#FFFFFF;border:2px solid #161512;border-radius:16px;padding:0 12px;min-height:56px;width:100%"><template data-sc="for" list="{{anos}}" as="o" hint-placeholder-count="4"><option value="{{o}}">{{o}}</option></template></select></div></div>
+<template data-sc="if" value="{{novo}}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">LOTE</span><span style="display:flex;align-items:center;border:2px solid #161512;border-radius:16px;min-height:56px;padding:0 16px;background:#FFFFFF;gap:2px"><b style="font-size:16px;letter-spacing:.04em;color:#5E5A4E">{{tokenPrefixo}}</b><input value="{{lote}}" onChange="{{setLote}}" inputmode="numeric" maxlength="5" placeholder="00000" aria-label="Número do lote" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:600 16px Montserrat,sans-serif;color:#161512;letter-spacing:.06em;font-variant-numeric:tabular-nums"></span></div></template>
+<template data-sc="if" value="{{existente}}" hint-placeholder-val="{{ true }}"><div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">LOTE E TOKEN</span><span style="font-size:13px;line-height:1.5;color:#3D3A32"><b style="color:#161512">Lote {{p.lote}}</b> · o token não muda depois de criado, para não invalidar etiquetas já impressas.</span></div></template>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">POR QUE ESTE MEL É DIFERENTE?</span><span style="display:flex;border:2px solid #161512;border-radius:16px;padding:12px 16px;background:#FFFFFF"><textarea onChange="{{setPorque}}" value="{{porque}}" rows="3" maxlength="220" aria-label="Por que este mel é diferente" placeholder="O que o produtor informa sobre este lote" style="flex:1;min-width:0;border:0;outline:none;background:transparent;resize:none;font:500 14px/1.5 Montserrat,sans-serif;color:#161512"></textarea></span></div>
+<template data-sc="if" value="{{erro}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px;font-weight:600;background:#FFF0B6;border-radius:12px;padding:10px 12px">{{erro}}</span></template>
+<button type="button" onClick="{{salvar}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;background:#FFDE59;color:#161512;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;border:0;font-family:Montserrat,sans-serif;width:100%;cursor:pointer;">{{salvarTxt}}</button>
+<template data-sc="if" value="{{existente}}" hint-placeholder-val="{{ true }}"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px"><a href="#App11Mel/{{id}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;font-size:12px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="2.6"></circle></svg>VER FICHA</a><a href="#App26Etiqueta/{{id}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;font-size:12px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>ETIQUETA</a></div></template>
+<template data-sc="if" value="{{podeExcluir}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{excluir}}" style="{{excluirStyle}}">{{excluirTxt}}</button></template>
+<span aria-hidden="true" style="height:16px;flex:none"></span>
+</div>
+</main>
+<div role="status" aria-live="polite" style="{{toastStyle}}"><span style="width:22px;height:25px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#161512" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></span><span style="flex:1;font-size:13px;font-weight:600">{{toast}}</span><a href="#App11Mel/{{id}}" style="color:#FFDE59;font-size:12px;font-weight:700;letter-spacing:.08em;padding:10px 6px;text-decoration:none">VER FICHA</a></div>
+<div aria-hidden="true" style="height:var(--sab);flex:none"></div>
+</div>
+</template>
+<template id="t-App26Etiqueta" data-title="Etiqueta do pote — Área do revendedor">
+<div style="width:100%;height:100%;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:var(--sat);flex:none"></div><header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="#App24Painel" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em">ETIQUETA</span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"></div></header><main style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;position:relative;display:flex;flex-direction:column">
+<div style="padding:4px 20px 0;display:flex;flex-direction:column;gap:14px">
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:40px;line-height:.92;">ETIQUETA<br>DO POTE</h1>
+<p style="margin:0;font-size:13px;line-height:1.5;color:#3D3A32">Modelo de 180 × 60 mm para dar a volta no pote. O QR Code abre a ficha deste mel no app.</p>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">MEL</span><select value="{{id}}" onChange="{{setMel}}" style="font:700 13px Montserrat,sans-serif;color:#161512;background:{{selTint}};border:1.5px solid #161512;border-radius:12px;padding:0 8px;min-height:46px;width:100%"><template data-sc="for" list="{{opts}}" as="o" hint-placeholder-count="4"><option value="{{o.id}}">{{o.label}}</option></template></select></label>
+<div data-raw aria-label="Prévia da etiqueta de {{m.nome}}" role="img" style="width:100%;aspect-ratio:3/1;position:relative;overflow:hidden;border-radius:12px;box-shadow:0 0 0 1px #E6DFC4;background:#FFFCF1"></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">QUANTIDADE</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><template data-sc="for" list="{{qtds}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></template></div></div>
+<span style="font-size:12px;color:#5E5A4E">{{resumo}}</span>
+<button type="button" onClick="{{imprimir}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;background:#FFDE59;color:#161512;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;border:0;font-family:Montserrat,sans-serif;width:100%;cursor:pointer;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3h10v6"></path><rect x="3" y="9" width="18" height="8" rx="2"></rect><path d="M7 14h10v7H7z"></path></svg>IMPRIMIR OU SALVAR PDF</button>
+<button type="button" onClick="{{copiar}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;font-family:Montserrat,sans-serif;width:100%;cursor:pointer;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM18 14h2M14 18h2"></path></svg>{{copiarTxt}}</button>
+<div style="border:1.5px dashed #A69E80;border-radius:16px;padding:12px 14px;display:flex;gap:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg><span style="font-size:12px;line-height:1.5;color:#3D3A32">Na janela de impressão, escolha <b style="color:#161512">Salvar como PDF</b> para mandar para a gráfica, com escala em 100% (tamanho real). Cabem 4 etiquetas por folha A4.</span></div>
+<span aria-hidden="true" style="height:16px;flex:none"></span>
+</div>
+</main>
+<div role="status" aria-live="polite" style="{{toastStyle}}"><span style="width:22px;height:25px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#161512" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></span><span style="flex:1;font-size:13px;font-weight:600">{{toast}}</span></div>
+<div aria-hidden="true" style="height:var(--sab);flex:none"></div>
 </div>
 </template>
 <script>
@@ -2868,14 +2990,16 @@ var qrcode = function() {
     return qrcode;
 }));
 
-/* Dados e estado do app (V2).
+/* Dados e estado do app.
+   Os méis podem ser editados na área do revendedor (versão de demonstração:
+   as alterações ficam só neste aparelho, em localStorage).
    DADOS ILUSTRATIVOS: Produtor A, B e C são placeholders. Só o Mel de Laranjeira
    tem colheita/lote do briefing; o resto aparece como “Não informado”. */
 (function () {
   'use strict';
   var NI = 'Não informado';
 
-  var MEIS = [
+  var BASE = [
     { id: 'lar', nome: 'Mel de Laranjeira', l1: 'MEL DE', l2: 'LARANJEIRA', florada: 'Laranjeira', prodId: 'a', prod: 'Produtor A', mun: 'São José dos Pinhais',
       cor: 'Clara', perfil: 'Suave', crist: 'Variável', colheita: 'Novembro / 2026', colheitaLonga: 'Novembro de 2026', token: 'MEL-2026-LAR-00421',
       accent: '#F6DC6B', tint: '#FFF7D1', atualizado: '14/11/2026',
@@ -2902,29 +3026,58 @@ var qrcode = function() {
       desc: 'Perfil em construção: este produtor ainda não enviou uma apresentação.' }
   ];
 
+  var MEIS = [];
+  var CORES = { Laranjeira: ['#F6DC6B', '#FFF7D1'], Multifloral: ['#E9A23B', '#FCEBD0'], Eucalipto: ['#C2C76E', '#F3F3D8'] };
+  var PORQUE = {
+    Laranjeira: BASE[0].porque, Multifloral: BASE[1].porque, Eucalipto: BASE[2].porque,
+    '*': 'Cor, aroma e sabor vêm das flores visitadas pelas abelhas — é o que o produtor informa para este lote.'
+  };
+  var MESES_LONGOS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
   var short = function (mun) { return mun.replace('São José dos Pinhais', 'S. J. dos Pinhais'); };
-  MEIS.forEach(function (m) {
+  var byId = {}, prodById = {};
+  PRODS.forEach(function (p) { prodById[p.id] = p; });
+
+  function derive(m) {
+    var multi = m.florada.toLowerCase() === 'multifloral';
+    m.nome = multi ? 'Mel Multifloral' : 'Mel de ' + m.florada;
+    m.l1 = multi ? 'MEL' : 'MEL DE';
+    m.l2 = (multi ? 'Multifloral' : m.florada).toUpperCase();
+    var cs = CORES[m.florada] || ['#FFDE59', '#FFF0B6'];
+    m.accent = cs[0]; m.tint = cs[1];
+    var p = prodById[m.prodId] || PRODS[0];
+    m.prodId = p.id; m.prod = p.nome;
+    if (!m.mun) m.mun = p.mun;
+    if (!m.colheita) m.colheita = NI;
+    m.colheitaLonga = m.colheita === NI ? NI : m.colheita.replace(/\s*\/\s*/, ' de ');
+    if (!m.porque) m.porque = PORQUE[m.florada] || PORQUE['*'];
+    if (!m.cadastradoPor) m.cadastradoPor = 'Revendedor responsável';
     m.nomeUp = m.nome.toUpperCase();
     m.munS = short(m.mun);
     m.munSUp = m.munS.toUpperCase();
     m.lote = m.token.slice(-5);
     m.letra = m.prod.slice(-1);
     m.florUp = m.florada.toUpperCase();
-  });
-  PRODS.forEach(function (p) {
-    p.nomeUp = p.nome.toUpperCase();
-    p.meis = MEIS.filter(function (m) { return m.prodId === p.id; });
-    var fl = [];
-    p.meis.forEach(function (m) { if (fl.indexOf(m.florada) < 0) fl.push(m.florada); });
-    p.floradas = fl.map(function (f) { return { f: f, c: MEIS.filter(function (m) { return m.florada === f; })[0].accent }; });
-    p.floradasTxt = fl.join(' · ');
-    p.qtd = p.meis.length + (p.meis.length === 1 ? ' mel cadastrado' : ' méis cadastrados');
-    p.disp = p.meis.length + ' no ponto de venda';
-  });
+    m.prodUp = m.prod.toUpperCase();
+    return m;
+  }
 
-  var byId = {}, prodById = {};
-  MEIS.forEach(function (m) { byId[m.id] = m; });
-  PRODS.forEach(function (p) { prodById[p.id] = p; });
+  function rebuild() {
+    MEIS.length = 0;
+    BASE.forEach(function (b) { MEIS.push(derive(Object.assign({}, b, (st.edits || {})[b.id] || {}))); });
+    (st.novos || []).forEach(function (n) { MEIS.push(derive(Object.assign({}, n))); });
+    Object.keys(byId).forEach(function (k) { delete byId[k]; });
+    MEIS.forEach(function (m) { byId[m.id] = m; });
+    PRODS.forEach(function (p) {
+      p.nomeUp = p.nome.toUpperCase();
+      p.meis = MEIS.filter(function (m) { return m.prodId === p.id; });
+      var fl = [];
+      p.meis.forEach(function (m) { if (fl.indexOf(m.florada) < 0) fl.push(m.florada); });
+      p.floradas = fl.map(function (f) { return { f: f, c: (CORES[f] || ['#FFDE59'])[0] }; });
+      p.floradasTxt = fl.join(' · ') || NI;
+      p.qtd = p.meis.length + (p.meis.length === 1 ? ' mel cadastrado' : ' méis cadastrados');
+      p.disp = p.meis.length + ' no ponto de venda';
+    });
+  }
 
   function norm(t) {
     var s = String(t || '').trim();
@@ -2941,6 +3094,8 @@ var qrcode = function() {
   var st = { saved: [], history: [], onb: false };
   try { var raw = localStorage.getItem(KEY); if (raw) st = Object.assign(st, JSON.parse(raw)); } catch (e) {}
   try { if (localStorage.getItem('origem:onb') === '1') st.onb = true; } catch (e) {}
+  st.edits = st.edits || {}; st.novos = st.novos || []; st.rev = st.rev || null;
+  rebuild();
   var subs = [];
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {}
@@ -3005,6 +3160,84 @@ var qrcode = function() {
       });
       groups.forEach(function (g, i) { g.style = 'font-size:10px;font-weight:700;letter-spacing:.16em;margin-top:' + (i === 0 ? 4 : 18) + 'px'; });
       return groups;
+    },
+
+    /* ---------- área do revendedor (demonstração) ---------- */
+    rev: function () { return st.rev; },
+    login: function (email) { st.rev = { email: String(email).trim().toLowerCase(), nome: 'Revendedor responsável', t: Date.now() }; save(); },
+    logout: function () { st.rev = null; save(); },
+    OPC: {
+      florada: ['Laranjeira', 'Eucalipto', 'Multifloral'],
+      cor: ['Clara', 'Âmbar', 'Escura', 'Variável', NI],
+      perfil: ['Suave', 'Marcante', 'Intenso', 'Variável', NI],
+      crist: ['Lenta', 'Rápida', 'Variável', NI],
+      meses: MESES_LONGOS
+    },
+    isNovo: function (id) { return (st.novos || []).some(function (n) { return n.id === id; }); },
+    isEditado: function (id) { return !!(st.edits || {})[id]; },
+    proximoLote: function () {
+      var max = 0; MEIS.forEach(function (m) { max = Math.max(max, parseInt(m.lote, 10) || 0); });
+      return ('0000' + (max + 1)).slice(-5);
+    },
+    tokenPara: function (florada, lote) {
+      var code = String(florada || 'MEL').normalize('NFD').replace(/[^A-Za-z]/g, '').toUpperCase().slice(0, 3) || 'MEL';
+      return 'MEL-2026-' + (code + 'XXX').slice(0, 3) + '-' + ('0000' + String(lote || '').replace(/\D/g, '')).slice(-5);
+    },
+    tokenLivre: function (token, exceptId) { return !MEIS.some(function (m) { return m.token === token && m.id !== exceptId; }); },
+    /* f: { florada, prodId, mun, cor, perfil, crist, colheita, porque, lote? } — devolve o id salvo. */
+    saveMel: function (id, f) {
+      var d = new Date(), hoje = ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2) + '/' + d.getFullYear();
+      var campos = { florada: f.florada, prodId: f.prodId, mun: f.mun, cor: f.cor, perfil: f.perfil, crist: f.crist,
+        colheita: f.colheita || NI, porque: f.porque || '', atualizado: hoje, cadastradoPor: (st.rev && st.rev.nome) || 'Revendedor responsável' };
+      if (id && byId[id] && !App.isNovo(id)) {
+        st.edits[id] = campos;
+      } else if (id && App.isNovo(id)) {
+        st.novos = st.novos.map(function (n) { return n.id === id ? Object.assign({}, n, campos) : n; });
+      } else {
+        id = 'n' + Date.now().toString(36);
+        st.novos.push(Object.assign({ id: id, token: App.tokenPara(f.florada, f.lote || App.proximoLote()) }, campos));
+      }
+      rebuild(); save();
+      return id;
+    },
+    removeMel: function (id) {
+      if (!App.isNovo(id)) return;
+      st.novos = st.novos.filter(function (n) { return n.id !== id; });
+      st.saved = st.saved.filter(function (x) { return x.id !== id; });
+      rebuild(); save();
+    },
+    resetDemo: function () { st.edits = {}; st.novos = []; rebuild(); save(); },
+
+    /* ---------- etiqueta do pote (modelo do grupo, 180 × 60 mm) ---------- */
+    labelHTML: function (m, link) {
+      var e = function (x) { return String(x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+      var HEX = 'clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);';
+      var l2 = m.l2, t = l2.length > 11 ? Math.max(5.6, 9 * 11 / l2.length) : 9;
+      var chip = function (txt, filled) {
+        return filled
+          ? '<span style="display:inline-flex;align-items:center;gap:1.4mm;background:' + m.accent + ';padding:0 3.2mm 0 2.4mm;height:5.2mm;border-radius:999px;font-size:2.6mm;font-weight:700"><span style="width:2.4mm;height:2.75mm;background:#161512;display:block;' + HEX + '"></span>' + e(txt) + '</span>'
+          : '<span style="display:inline-flex;align-items:center;border:.3mm solid #161512;padding:0 3.2mm;height:5.2mm;box-sizing:border-box;border-radius:999px;font-size:2.6mm;font-weight:600">' + e(txt) + '</span>';
+      };
+      var pot = '<svg viewBox="0 0 120 160" style="position:absolute;left:23mm;top:19.5mm;width:24mm;height:32mm" aria-hidden="true"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="' + m.accent + '"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path><text x="60" y="110" text-anchor="middle" font-family="Anton, sans-serif" font-size="' + (m.florUp.length > 10 ? 7.5 : 8.5) + '" fill="#161512">' + e(m.florUp) + '</text></svg>';
+      var qr = '<svg viewBox="0 0 100 100" shape-rendering="crispEdges" role="img" aria-label="QR Code ' + e(m.token) + '" style="width:100%;height:100%;display:block"><path d="' + App.qrPath(link, 'M') + '" fill="#161512"></path></svg>';
+      return '<div class="etq-pote" style="width:180mm;height:60mm;position:relative;overflow:hidden;background:#FFFCF1;color:#161512;font-family:Montserrat,sans-serif;box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact">' +
+        '<span style="position:absolute;left:78mm;top:-6.5mm;width:16mm;height:18.5mm;background:' + m.accent + ';opacity:.55;' + HEX + '"></span>' +
+        '<span style="position:absolute;left:8.3mm;top:41.5mm;width:26.4mm;height:30.5mm;background:' + m.accent + ';opacity:.8;' + HEX + '"></span>' +
+        '<span style="position:absolute;left:160mm;top:52mm;width:11.6mm;height:13.4mm;background:' + m.accent + ';opacity:.55;' + HEX + '"></span>' +
+        '<span style="position:absolute;left:25.4mm;top:4.6mm;display:flex;align-items:center;gap:2mm"><span style="width:5.6mm;height:6.4mm;background:' + m.accent + ';display:flex;align-items:center;justify-content:center;' + HEX + '"><span style="width:3.3mm;height:3.8mm;background:#161512;display:flex;align-items:center;justify-content:center;' + HEX + '"><span style="width:1.5mm;height:1.7mm;background:' + m.accent + ';display:block;' + HEX + '"></span></span></span><span style="font-family:Anton,sans-serif;font-size:5.4mm;line-height:1;letter-spacing:.04em">ORIGEM</span></span>' +
+        pot +
+        '<div style="position:absolute;left:47.6mm;top:12.4mm;width:72mm;display:flex;flex-direction:column;align-items:flex-start">' +
+          '<div style="font-family:Anton,sans-serif;font-size:9mm;line-height:.92">' + e(m.l1) + '<br><span style="font-size:' + t.toFixed(2) + 'mm">' + e(l2) + '</span></div>' +
+          '<div style="margin-top:2mm;font-size:3mm;line-height:1.32;font-weight:500">Produzido por <b>' + e(m.prod) + '</b><br>Origem: ' + e(m.mun) + ' — PR</div>' +
+          '<div style="margin-top:2.6mm;display:inline-flex;align-items:center;gap:2mm;height:6.1mm;padding:0 3.4mm 0 2.6mm;box-sizing:border-box;border:.3mm solid #161512;border-radius:999px;background:' + m.tint + ';font-size:2.9mm;font-weight:500;white-space:nowrap"><svg viewBox="0 0 24 24" style="width:3.4mm;height:3.4mm" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2zM18 14h2M14 18h2"></path></svg>Token: <b style="letter-spacing:.02em">' + e(m.token) + '</b></div>' +
+          '<div style="margin-top:2.2mm;display:flex;gap:1.4mm;flex-wrap:nowrap">' + chip(m.florada, true) + (m.cor !== NI ? chip(m.cor) : '') + (m.perfil !== NI ? chip(m.perfil) : '') + '</div>' +
+        '</div>' +
+        '<div style="position:absolute;left:124.8mm;top:9.3mm;width:46mm;display:flex;flex-direction:column;align-items:flex-start">' +
+          '<span style="display:inline-flex;align-items:center;height:6.6mm;padding:0 3.6mm;border-radius:999px;background:' + m.accent + ';font-family:Anton,sans-serif;font-size:4.2mm;line-height:1;letter-spacing:.02em;white-space:nowrap">ESCANEIE E DESCUBRA</span>' +
+          '<span style="margin:1.6mm 0 0 2.2mm;font-size:2.55mm;line-height:1.3;font-weight:500">Acesse a origem e as<br>informações deste mel no app.</span>' +
+          '<span style="margin:2.4mm 0 0 2.2mm;width:27mm;height:27mm;background:#FFFFFF;border:.3mm solid #E6DFC4;border-radius:2.4mm;padding:1.8mm;box-sizing:border-box;display:block">' + qr + '</span>' +
+        '</div>' +
+      '</div>';
     },
 
     /* QR Code real (qrcode-generator) como path SVG num quadrado de 100×100. */
@@ -3118,7 +3351,7 @@ var qrcode = function() {
     var kids = [];
     renderInto(kidsOf(n), scope, kids);
     for (var k = 0; k < kids.length; k++) el.appendChild(kids[k]);
-    if (tag === 'select' && el.__value != null) el.value = el.__value;
+    if ((tag === 'select' || tag === 'textarea') && el.__value != null) el.value = el.__value;
     out.push(el);
   }
 
@@ -3136,7 +3369,7 @@ var qrcode = function() {
       else live.setAttribute(na[i].name, na[i].value);
     }
     live.__h = next.__h;
-    morphChildren(live, next);
+    if (!live.hasAttribute('data-raw')) morphChildren(live, next); // data-raw: conteúdo gerenciado pela tela
     if (next.__value != null && live.value !== next.__value) live.value = next.__value;
   }
   function morphChildren(live, next) {
@@ -3320,7 +3553,12 @@ return Component;
 
 S["App05Home"] = (function () {
 class Component extends DCLogic {
-  renderVals() { return { meis: Origem.meis.slice(0, 3) }; }
+  renderVals() {
+    const rev = Origem.rev();
+    return { meis: Origem.meis.slice(0, 3).map((m) => ({ ...m, rev: !!rev, notRev: !rev })),
+      revHref: rev ? '#App24Painel' : '#App23Login',
+      revText: rev ? 'Conectado como ' + rev.email + '. Abrir o painel.' : 'Entre para editar os méis e fazer as etiquetas dos lotes.' };
+  }
 }
 return Component;
 })();
@@ -3477,7 +3715,7 @@ class Component extends DCLogic {
       toggleSave: () => { const ns = Origem.toggleSaved(m.id); this.setState({ toast: ns }); clearTimeout(this.tt); if (ns) this.tt = setTimeout(() => this.setState({ toast: false }), 2600); } };
   }
 
-  renderVals() { const m = Origem.mel(this.props.param) || Origem.meis[0]; return { m, ...this.saveVals(m) }; }
+  renderVals() { const m = Origem.mel(this.props.param) || Origem.meis[0]; return { m, rev: !!Origem.rev(), ...this.saveVals(m) }; }
 }
 return Component;
 })();
@@ -3561,15 +3799,10 @@ class Component extends DCLogic {
   componentWillUnmount() { clearTimeout(this.t); }
   pick(k, val) { this.setState({ [k]: val, anim: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ anim: false }), 30); }
   renderVals() {
-    const M = [
-      { id: 'lar', nome: 'Mel de Laranjeira', florada: 'Laranjeira', prod: 'Produtor A', mun: 'São José dos Pinhais', cor: 'Clara', perfil: 'Suave', crist: 'Variável', colheita: 'Novembro / 2026', token: 'MEL-2026-LAR-00421', accent: '#F6DC6B', tint: '#FFF7D1' },
-      { id: 'mulb', nome: 'Mel Multifloral', florada: 'Multifloral', prod: 'Produtor B', mun: 'Colombo', cor: 'Âmbar', perfil: 'Marcante', crist: 'Não informado', colheita: 'Não informado', token: 'MEL-2026-MUL-00388', accent: '#E9A23B', tint: '#FCEBD0' },
-      { id: 'euc', nome: 'Mel de Eucalipto', florada: 'Eucalipto', prod: 'Produtor C', mun: 'Mandirituba', cor: 'Âmbar', perfil: 'Intenso', crist: 'Variável', colheita: 'Não informado', token: 'MEL-2026-EUC-00157', accent: '#C2C76E', tint: '#F3F3D8' },
-      { id: 'mula', nome: 'Mel Multifloral', florada: 'Multifloral', prod: 'Produtor A', mun: 'São José dos Pinhais', cor: 'Variável', perfil: 'Variável', crist: 'Não informado', colheita: 'Não informado', token: 'MEL-2026-MUL-00402', accent: '#E9A23B', tint: '#FCEBD0' }
-    ];
+    const M = Origem.meis;
     const by = {}; M.forEach((m) => { by[m.id] = m; });
     const L = [['Origem', 'mun'], ['Produtor', 'prod'], ['Florada', 'florada'], ['Cor', 'cor'], ['Perfil', 'perfil'], ['Cristalização', 'crist'], ['Colheita', 'colheita']];
-    const A = by[this.state.a], B = by[this.state.b], an = this.state.anim;
+    const A = by[this.state.a] || M[0], B = by[this.state.b] || M[1], an = this.state.anim;
     const sel = (t) => 'font:700 13px Montserrat,sans-serif;color:#161512;background:' + t + ';border:1.5px solid #161512;border-radius:12px;padding:0 8px;min-height:46px;width:100%';
     const cell = (x, bg, same) => 'margin:0;background:' + bg + ';border-radius:10px;padding:0 9px;min-height:36px;display:flex;align-items:center;line-height:1.2;' +
       (an ? 'opacity:0;transform:translateX(14px);transition:none;' : 'opacity:1;transform:none;transition:opacity .35s ease,transform .35s ease;') +
@@ -3579,7 +3812,7 @@ class Component extends DCLogic {
       wrap: 'display:grid;grid-template-columns:82px minmax(0,1fr) minmax(0,1fr);gap:6px;align-items:center;padding:5px 0;border-top:1.5px solid ' + (same ? '#D9D1B4' : '#161512'),
       sa: cell(va, A.tint, same), sb: cell(vb, B.tint, same) }; });
     return { rows, a: this.state.a, b: this.state.b, selA: sel(A.tint), selB: sel(B.tint),
-      opts: M.map((m) => ({ id: m.id, label: m.florada + ' · ' + m.prod.slice(-1) })),
+      opts: M.map((m) => ({ id: m.id, label: m.florada + ' · ' + m.prod.slice(-1) + (M.filter((x) => x.florada === m.florada && x.prod === m.prod).length > 1 ? ' · ' + m.lote : '') })),
       setA: (e) => this.pick('a', e.target.value), setB: (e) => this.pick('b', e.target.value) };
   }
 }
@@ -3590,13 +3823,12 @@ S["App17Meis"] = (function () {
 class Component extends DCLogic {
   constructor(p) { super(p); this.state = { cat: 'Florada', f: { Florada: 'Todas', Origem: 'Todas', Produtor: 'Todos', 'Características': 'Todas' }, q: '' }; }
   renderVals() {
-    const M = [
-      { id: 'lar', nome: 'Mel de Laranjeira', florada: 'Laranjeira', prod: 'Produtor A', mun: 'São José dos Pinhais', cor: 'Clara', perfil: 'Suave', crist: 'Variável', colheita: 'Novembro / 2026', token: 'MEL-2026-LAR-00421', accent: '#F6DC6B', tint: '#FFF7D1' },
-      { id: 'mulb', nome: 'Mel Multifloral', florada: 'Multifloral', prod: 'Produtor B', mun: 'Colombo', cor: 'Âmbar', perfil: 'Marcante', crist: 'Não informado', colheita: 'Não informado', token: 'MEL-2026-MUL-00388', accent: '#E9A23B', tint: '#FCEBD0' },
-      { id: 'euc', nome: 'Mel de Eucalipto', florada: 'Eucalipto', prod: 'Produtor C', mun: 'Mandirituba', cor: 'Âmbar', perfil: 'Intenso', crist: 'Variável', colheita: 'Não informado', token: 'MEL-2026-EUC-00157', accent: '#C2C76E', tint: '#F3F3D8' },
-      { id: 'mula', nome: 'Mel Multifloral', florada: 'Multifloral', prod: 'Produtor A', mun: 'São José dos Pinhais', cor: 'Variável', perfil: 'Variável', crist: 'Não informado', colheita: 'Não informado', token: 'MEL-2026-MUL-00402', accent: '#E9A23B', tint: '#FCEBD0' }
-    ];
-    const O = { Florada: ['Todas', 'Laranjeira', 'Eucalipto', 'Multifloral'], Origem: ['Todas', 'São José dos Pinhais', 'Colombo', 'Mandirituba'], Produtor: ['Todos', 'Produtor A', 'Produtor B', 'Produtor C'], 'Características': ['Todas', 'Clara', 'Âmbar', 'Suave', 'Intenso'] };
+    const M = Origem.meis;
+    const more = (base, vals, skip) => base.concat(vals.filter((v, i) => vals.indexOf(v) === i && base.indexOf(v) < 0 && (skip || []).indexOf(v) < 0));
+    const O = { Florada: more(['Todas', 'Laranjeira', 'Eucalipto', 'Multifloral'], M.map((m) => m.florada)),
+      Origem: more(['Todas', 'São José dos Pinhais', 'Colombo', 'Mandirituba'], M.map((m) => m.mun)),
+      Produtor: more(['Todos', 'Produtor A', 'Produtor B', 'Produtor C'], M.map((m) => m.prod)),
+      'Características': more(['Todas', 'Clara', 'Âmbar', 'Suave', 'Intenso'], M.map((m) => m.cor).concat(M.map((m) => m.perfil)), ['Variável', 'Marcante', Origem.NI]) };
     const { cat, f, q } = this.state;
     const base = 'display:inline-flex;align-items:center;gap:5px;border-radius:12px;padding:0 13px;min-height:44px;font:700 13px Montserrat,sans-serif;flex:none;cursor:pointer;';
     const isAll = (x) => x === 'Todas' || x === 'Todos';
@@ -3607,7 +3839,8 @@ class Component extends DCLogic {
     const ok = (m) => (isAll(f.Florada) || m.florada === f.Florada) && (isAll(f.Origem) || m.mun === f.Origem) && (isAll(f.Produtor) || m.prod === f.Produtor) &&
       (isAll(f['Características']) || m.cor === f['Características'] || m.perfil === f['Características']) &&
       (!q || (m.nome + ' ' + m.prod + ' ' + m.mun).toLowerCase().indexOf(q.toLowerCase()) > -1);
-    const lista = M.filter(ok).map((m) => ({ ...m, nomeUp: m.nome.toUpperCase() }));
+    const rev = !!Origem.rev();
+    const lista = M.filter(ok).map((m) => ({ ...m, rev }));
     return { cats, opts, lista, q, setQ: (e) => this.setState({ q: e.target.value }), count: lista.length === 0 ? 'NENHUM MEL COM ESSES FILTROS' : lista.length + (lista.length === 1 ? ' MEL' : ' MÉIS') };
   }
 }
@@ -3712,6 +3945,196 @@ class Component extends DCLogic {
         if (!this.state.confirm) { this.setState({ confirm: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ confirm: false }), 3000); return; }
         clearTimeout(this.t); this.setState({ confirm: false }); Origem.clearHistory();
       } };
+  }
+}
+return Component;
+})();
+
+S["App23Login"] = (function () {
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { email: '', senha: '', ver: false, erro: '' }; }
+  componentDidMount() { if (Origem.rev()) window.__go('App24Painel'); }
+  entrar() {
+    const email = this.state.email.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) return this.setState({ erro: 'Digite um e-mail válido.' });
+    if (this.state.senha.length < 4) return this.setState({ erro: 'A senha precisa ter pelo menos 4 caracteres.' });
+    Origem.login(email);
+    window.__go('App24Painel');
+  }
+  renderVals() {
+    const v = this.state.ver;
+    return { email: this.state.email, senha: this.state.senha, erro: this.state.erro,
+      senhaType: v ? 'text' : 'password', senhaBtn: v ? 'OCULTAR' : 'MOSTRAR', senhaLabel: v ? 'Ocultar senha' : 'Mostrar senha',
+      setEmail: (e) => this.setState({ email: e.target.value, erro: '' }),
+      setSenha: (e) => this.setState({ senha: e.target.value, erro: '' }),
+      toggleSenha: () => this.setState({ ver: !v }),
+      key: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.entrar(); } },
+      demo: () => this.setState({ email: 'revenda@origem.app', senha: 'origem', erro: '' }),
+      entrar: () => this.entrar() };
+  }
+}
+return Component;
+})();
+
+S["App24Painel"] = (function () {
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { confirm: false }; }
+  componentDidMount() { if (!Origem.rev()) window.__go('App23Login'); }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const rev = Origem.rev() || { email: '' };
+    const lista = Origem.meis.map((m) => ({ ...m, badge: Origem.isNovo(m.id) ? 'NOVO' : Origem.isEditado(m.id) ? 'EDITADO' : '' }));
+    const n = lista.length, c = this.state.confirm;
+    return { email: rev.email, lista, count: n + (n === 1 ? ' MEL CADASTRADO' : ' MÉIS CADASTRADOS'),
+      sair: () => { Origem.logout(); window.__go('App05Home'); },
+      resetText: c ? 'TOQUE DE NOVO PARA RESTAURAR' : 'RESTAURAR DADOS ORIGINAIS',
+      resetStyle: 'align-self:flex-start;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.08em;cursor:pointer;color:#161512;min-height:40px;transition:background .2s,padding .2s;' + (c ? 'background:#FFDE59;border-radius:999px;padding:0 14px' : 'background:transparent;text-decoration:underline;padding:0'),
+      reset: () => {
+        if (!c) { this.setState({ confirm: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ confirm: false }), 3000); return; }
+        clearTimeout(this.t); this.setState({ confirm: false }); Origem.resetDemo();
+      } };
+  }
+}
+return Component;
+})();
+
+S["App25Editar"] = (function () {
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    const m = p.param && p.param !== 'novo' ? Origem.mel(p.param) : null;
+    const O = Origem.OPC, NI = Origem.NI;
+    const col = m && m.colheita !== NI ? m.colheita.split(/\s*\/\s*/) : ['', ''];
+    const known = !m || O.florada.indexOf(m.florada) > -1;
+    this.state = m
+      ? { id: m.id, florada: known ? m.florada : 'Outra', outraTxt: known ? '' : m.florada, prodId: m.prodId, mun: m.mun, cor: m.cor, perfil: m.perfil, crist: m.crist,
+          mes: col[0] || '', ano: col[1] || '', porque: m.porque, lote: m.lote, erro: '', toast: '', confirm: false }
+      : { id: null, florada: 'Multifloral', outraTxt: '', prodId: 'a', mun: Origem.prod('a').mun, cor: 'Clara', perfil: 'Suave', crist: NI,
+          mes: '', ano: String(new Date().getFullYear()), porque: '', lote: Origem.proximoLote(), erro: '', toast: '', confirm: false };
+    if (window.__ctx.flash) { this.state.toast = window.__ctx.flash; window.__ctx.flash = null; }
+  }
+  componentDidMount() {
+    if (!Origem.rev()) return window.__go('App23Login');
+    if (this.props.param && this.props.param !== 'novo' && !Origem.mel(this.props.param)) return window.__go('App24Painel');
+    if (this.state.toast) this.tt = setTimeout(() => this.setState({ toast: '' }), 2600);
+  }
+  componentWillUnmount() { clearTimeout(this.tt); clearTimeout(this.tc); }
+  florada() {
+    const s = this.state;
+    if (s.florada !== 'Outra') return s.florada;
+    const t = s.outraTxt.trim();
+    return t ? t.charAt(0).toUpperCase() + t.slice(1) : '';
+  }
+  salvar() {
+    const s = this.state, florada = this.florada();
+    if (!florada) return this.setState({ erro: 'Informe o nome da florada.' });
+    if (!s.mun.trim()) return this.setState({ erro: 'Informe o município.' });
+    if (!s.id) {
+      if (!/^\d{1,5}$/.test(s.lote)) return this.setState({ erro: 'O lote precisa ter até 5 números.' });
+      if (!Origem.tokenLivre(Origem.tokenPara(florada, s.lote))) return this.setState({ erro: 'Já existe um mel com esse lote e essa florada.' });
+    }
+    const colheita = s.mes && s.ano ? s.mes + ' / ' + s.ano : Origem.NI;
+    const id = Origem.saveMel(s.id, { florada, prodId: s.prodId, mun: s.mun.trim(), cor: s.cor, perfil: s.perfil, crist: s.crist, colheita, porque: s.porque.trim(), lote: s.lote });
+    if (!s.id) { window.__ctx.flash = 'Mel cadastrado'; return window.__go('App25Editar/' + id); }
+    this.setState({ erro: '', toast: 'Alterações salvas' });
+    clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: '' }), 2600);
+  }
+  renderVals() {
+    const s = this.state, O = Origem.OPC, NI = Origem.NI;
+    const chip = (on) => 'border-radius:999px;padding:0 13px;min-height:40px;font:600 12px Montserrat,sans-serif;flex:none;cursor:pointer;' + (on ? 'background:#FFF0B6;border:1.5px solid #161512;color:#161512' : 'background:transparent;border:1px solid #D9D1B4;color:#3D3A32');
+    const opts = (list, key, label) => list.map((v) => ({ t: label ? label(v) : v, on: s[key] === v, style: chip(s[key] === v), pick: () => {
+      const patch = { [key]: v, erro: '' };
+      if (key === 'prodId') { const old = Origem.prod(s.prodId), nw = Origem.prod(v); if (!s.mun.trim() || (old && s.mun === old.mun)) patch.mun = nw.mun; }
+      this.setState(patch);
+    } }));
+    const florada = this.florada() || 'Florada';
+    const m = s.id ? Origem.mel(s.id) : null;
+    const multi = florada.toLowerCase() === 'multifloral';
+    const cores = { Laranjeira: ['#F6DC6B', '#FFF7D1'], Multifloral: ['#E9A23B', '#FCEBD0'], Eucalipto: ['#C2C76E', '#F3F3D8'] }[florada] || ['#FFDE59', '#FFF0B6'];
+    const token = m ? m.token : Origem.tokenPara(florada, s.lote);
+    const p = { l1: multi ? 'MEL' : 'MEL DE', l2: (multi ? 'Multifloral' : florada).toUpperCase(), accent: cores[0], tint: cores[1], token, lote: m ? m.lote : s.lote };
+    const ano = new Date().getFullYear(), anos = [];
+    for (let y = ano + 1; y >= ano - 3; y--) anos.push(String(y));
+    const novoSalvo = !!(s.id && Origem.isNovo(s.id));
+    const c = s.confirm;
+    return { id: s.id, p, titulo: s.id ? 'EDITAR MEL' : 'NOVO MEL', novo: !s.id, existente: !!s.id,
+      salvarTxt: s.id ? 'SALVAR ALTERAÇÕES' : 'CADASTRAR MEL',
+      floradas: opts(O.florada.concat(['Outra']), 'florada'), outra: s.florada === 'Outra', outraTxt: s.outraTxt,
+      produtores: opts(Origem.produtores.map((x) => x.id), 'prodId', (id) => Origem.prod(id).nome),
+      cores: opts(O.cor, 'cor'), perfis: opts(O.perfil, 'perfil'), crists: opts(O.crist, 'crist'),
+      meses: [{ v: '', t: 'Não informado' }].concat(O.meses.map((x) => ({ v: x, t: x }))), anos,
+      mes: s.mes, ano: s.ano, mun: s.mun, porque: s.porque, lote: s.lote, erro: s.erro, toast: s.toast,
+      tokenPrefixo: token.slice(0, -5),
+      setOutra: (e) => this.setState({ outraTxt: e.target.value, erro: '' }),
+      setMun: (e) => this.setState({ mun: e.target.value, erro: '' }),
+      setMes: (e) => this.setState({ mes: e.target.value }),
+      setAno: (e) => this.setState({ ano: e.target.value }),
+      setLote: (e) => this.setState({ lote: e.target.value.replace(/\D/g, '').slice(0, 5), erro: '' }),
+      setPorque: (e) => this.setState({ porque: e.target.value }),
+      salvar: () => this.salvar(),
+      toastStyle: 'position:absolute;left:16px;right:16px;bottom:calc(var(--sab) + 18px);z-index:5;background:#161512;color:#FFFCF1;border-radius:16px;padding:12px 12px 12px 16px;display:flex;align-items:center;gap:10px;transition:opacity .3s ease,transform .3s ease;' + (this.state.toast ? 'opacity:1;transform:none' : 'opacity:0;transform:translateY(16px);pointer-events:none'),
+      podeExcluir: novoSalvo,
+      excluirTxt: c ? 'TOQUE DE NOVO PARA EXCLUIR' : 'EXCLUIR ESTE MEL',
+      excluirStyle: 'align-self:flex-start;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.08em;cursor:pointer;color:#161512;min-height:40px;transition:background .2s,padding .2s;' + (c ? 'background:#FFDE59;border-radius:999px;padding:0 14px' : 'background:transparent;text-decoration:underline;padding:0'),
+      excluir: () => {
+        if (!c) { this.setState({ confirm: true }); clearTimeout(this.tc); this.tc = setTimeout(() => this.setState({ confirm: false }), 3000); return; }
+        Origem.removeMel(s.id); window.__go('App24Painel');
+      } };
+  }
+}
+return Component;
+})();
+
+S["App26Etiqueta"] = (function () {
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { id: (Origem.mel(p.param) || Origem.meis[0]).id, qtd: 4, toast: '' }; }
+  componentDidMount() {
+    if (!Origem.rev()) return window.__go('App23Login');
+    this.onResize = () => this.fit();
+    window.addEventListener('resize', this.onResize);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); clearTimeout(this.tt); }
+  componentDidRender() {
+    const box = document.querySelector('#app [data-raw]');
+    if (!box) return;
+    const m = Origem.mel(this.state.id) || Origem.meis[0];
+    const key = m.id + '|' + m.atualizado + '|' + m.florada + '|' + m.cor + '|' + m.perfil + '|' + m.mun + '|' + m.prodId;
+    if (box.__key !== key) { box.__key = key; box.innerHTML = Origem.labelHTML(m, Origem.linkFor(m)); }
+    this.fit();
+  }
+  fit() {
+    const box = document.querySelector('#app [data-raw]'), el = box && box.firstElementChild;
+    if (!el) return;
+    const s = box.clientWidth / el.offsetWidth;
+    el.style.position = 'absolute'; el.style.left = '0'; el.style.top = '0';
+    el.style.transformOrigin = '0 0'; el.style.transform = 'scale(' + s + ')';
+  }
+  aviso(t) { this.setState({ toast: t }); clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: '' }), 2200); }
+  renderVals() {
+    const m = Origem.mel(this.state.id) || Origem.meis[0], q = this.state.qtd;
+    const chip = (on) => 'border-radius:999px;padding:0 13px;min-height:40px;font:600 12px Montserrat,sans-serif;flex:none;cursor:pointer;' + (on ? 'background:#FFF0B6;border:1.5px solid #161512;color:#161512' : 'background:transparent;border:1px solid #D9D1B4;color:#3D3A32');
+    const folhas = Math.ceil(q / 4);
+    return { m, id: m.id, selTint: m.tint,
+      opts: Origem.meis.map((x) => ({ id: x.id, label: x.nome + ' · ' + x.prod + ' · ' + x.lote })),
+      setMel: (e) => { this.setState({ id: e.target.value }); history.replaceState(history.state, '', '#App26Etiqueta/' + e.target.value); },
+      qtds: [1, 4, 8, 12].map((n) => ({ t: n === 1 ? '1 etiqueta' : n + ' etiquetas', on: q === n, style: chip(q === n), pick: () => this.setState({ qtd: n }) })),
+      resumo: q + (q === 1 ? ' etiqueta' : ' etiquetas') + ' · ' + folhas + (folhas === 1 ? ' folha A4' : ' folhas A4'),
+      imprimir: () => {
+        const area = document.getElementById('print-area');
+        const one = Origem.labelHTML(m, Origem.linkFor(m));
+        let html = '';
+        for (let i = 0; i < q; i++) html += one;
+        area.innerHTML = html;
+        setTimeout(() => window.print(), 60);
+      },
+      copiarTxt: 'COPIAR LINK DO QR CODE',
+      copiar: () => {
+        const link = Origem.linkFor(m);
+        const ok = () => this.aviso('Link copiado');
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(ok, ok); else ok();
+      },
+      toast: this.state.toast,
+      toastStyle: 'position:absolute;left:16px;right:16px;bottom:calc(var(--sab) + 18px);z-index:5;background:#161512;color:#FFFCF1;border-radius:16px;padding:12px 12px 12px 16px;display:flex;align-items:center;gap:10px;transition:opacity .3s ease,transform .3s ease;' + (this.state.toast ? 'opacity:1;transform:none' : 'opacity:0;transform:translateY(16px);pointer-events:none') };
   }
 }
 return Component;

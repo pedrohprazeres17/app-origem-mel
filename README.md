@@ -59,10 +59,18 @@ A V2 mantém a aparência das 22 telas do Claude Design e transforma o protótip
 - **Meus méis:** salvar/remover em qualquer ficha (com desfazer), "Comparar salvos" já abre os dois primeiros, histórico real de leituras (via QR Code ou token) agrupado por dia, com limpar.
 - **App de verdade:** botão Voltar segue o histórico, transições entre telas, vibração na leitura, funciona offline (service worker) e pode ser instalado na tela inicial.
 
+**Área do revendedor (demonstração)** — pedido do grupo em 24/11/2026
+
+- **Login:** card "Área do revendedor" no fim da Início. Na demonstração vale qualquer e-mail e senha (o botão "USAR" preenche um exemplo). Não há servidor: o acesso e as alterações ficam salvos só no aparelho.
+- **Painel "Seus méis":** lista os méis com atalhos para editar, fazer etiqueta e ver a ficha; permite cadastrar mel novo e restaurar os dados originais.
+- **Editar mel:** florada (ou outra), produtor, município, cor, perfil, cristalização, colheita e "por que este mel é diferente". Mel novo ganha lote e token automáticos. O token de um mel existente não muda, para não invalidar etiquetas impressas. As mudanças aparecem na hora em todas as telas do app.
+- **Etiqueta do pote:** segue o modelo do grupo (`Etiqueta_Projeto_III.pdf`, 180 × 60 mm) com as fontes e cores do app, e com o QR Code do lote à direita, em "Escaneie e descubra". Prévia, quantidade (1, 4, 8 ou 12) e "Imprimir ou salvar PDF" em tamanho real, 4 por folha A4. Com o revendedor conectado, os cards de "Explore os méis", "Méis disponíveis" e a ficha do mel ganham o botão de etiqueta.
+- O modelo da etiqueta fica num lugar só (`labelHTML` em `src/data.js`), usado pelo app e por `etiquetas.html`.
+
 **Como o código está organizado**
 
 - `design/` — arquivos originais exportados do Claude Design (referência, não editar).
-- `src/screens/` — as 22 telas da V2 (mesmo formato do Claude Design, com dados dinâmicos).
+- `src/screens/` — as 22 telas do design (com dados dinâmicos) e as 4 telas do revendedor (`App23Login` a `App26Etiqueta`), no mesmo formato e padrão visual.
 - `src/data.js` — méis, produtores, tokens, salvos e histórico (salvos no aparelho, via `localStorage`).
 - `tools/runtime.js` — executa o formato do Claude Design (`{{holes}}`, `sc-for`, `sc-if`, `setState`), rotas, link do QR e transições.
 - `tools/build.mjs` — gera `index.html`, `etiquetas.html`, `sw.js` e `vendor/jsQR.js`.
@@ -74,7 +82,7 @@ npm install
 npm run build
 ```
 
-**Limitações conhecidas:** os dados ainda ficam dentro do app (não há painel de cadastro nem banco de dados); salvos e histórico ficam só no aparelho; Produtor A/B/C continuam ilustrativos.
+**Limitações conhecidas:** o login do revendedor é só de demonstração (sem servidor nem senha de verdade); edições, salvos e histórico ficam só no aparelho; Produtor A/B/C continuam ilustrativos.
 
 ## Links
 

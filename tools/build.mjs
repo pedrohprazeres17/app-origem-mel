@@ -21,7 +21,9 @@ const files = canvas.order.filter((f) => /^App\d\d\w+\.dc\.html$/.test(f) && can
 const screensDir = join(root, 'src', 'screens');
 const available = new Set(readdirSync(screensDir));
 
-const screens = files.filter((f) => available.has(f)).map((f) => {
+// Telas novas (sem prancha no Claude Design) entram depois, em ordem de nome.
+const extra = [...available].filter((f) => /^App\d\d\w+\.dc\.html$/.test(f) && !files.includes(f)).sort();
+const screens = files.filter((f) => available.has(f)).concat(extra).map((f) => {
   const src = readFileSync(join(screensDir, f), 'utf8');
   const id = f.replace('.dc.html', '');
   const title = (src.match(/<title>([^<]*)<\/title>/) || [])[1] || 'Origem';
