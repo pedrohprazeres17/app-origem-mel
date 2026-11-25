@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Histórico de scans</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:54px;flex:none"></div>
+
+<main style="flex:1;min-height:0;overflow:hidden;position:relative;display:flex;flex-direction:column">
+<div style="padding:6px 20px 0;display:flex;flex-direction:column;gap:12px">
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:46px;line-height:.92;">HISTÓRICO</h1>
+<nav aria-label="Meus méis" style="display:flex;gap:4px;background:#FFF0B6;border-radius:999px;padding:4px"><a href="App21Salvos.dc.html" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:42px;border-radius:999px;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.1em;color:#161512">SALVOS</a><a href="App22Historico.dc.html" aria-current="page" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:42px;border-radius:999px;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.1em;background:#161512;color:#FFFCF1">HISTÓRICO</a></nav>
+<sc-if value="{{has}}" hint-placeholder-val="{{ true }}"><div style="display:flex;flex-direction:column">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3"><span style="{{g.style}}">{{g.label}}</span>
+<sc-for list="{{g.items}}" as="h" hint-placeholder-count="1"><a href="#App11Mel/{{h.mel.id}}" style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #E6DFC4;text-decoration:none;color:#161512"><span style="width:50px;height:58px;border-radius:11px;background:{{h.mel.tint}};display:flex;align-items:center;justify-content:center;flex:none"><span style="width:22px;height:25px;background:{{h.mel.accent}};display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span></span><span style="flex:1;display:flex;flex-direction:column;gap:2px"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:18px">{{h.mel.nomeUp}}</b><span style="font-size:12px;font-weight:600">{{h.mel.prod}}</span><span style="display:flex;align-items:center;gap:5px;font-size:11px;color:#5E5A4E"><sc-if value="{{h.isQr}}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#5E5A4E" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"></path><path d="M7 12h10"></path></svg></sc-if><sc-if value="{{h.isToken}}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#5E5A4E" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"></rect><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"></path></svg></sc-if>{{h.hora}} · {{h.via}}</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a></sc-for>
+</sc-for>
+</div></sc-if>
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}"><div style="border:1.5px dashed #A69E80;border-radius:18px;padding:14px;display:flex;gap:12px;align-items:center"><span style="width:34px;height:39px;background:#FFF0B6;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3 2"></path></svg></span><span style="font-size:12px;line-height:1.45;color:#3D3A32">Nenhum mel por aqui ainda. Cada QR Code escaneado ou token digitado aparece nesta lista.</span></div>
+<a href="#App06Scanner" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;background:#FFDE59;color:#161512;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"></path><path d="M7 12h10"></path></svg>ESCANEAR AGORA</a></sc-if>
+<span style="font-size:12px;line-height:1.45;color:#5E5A4E">O histórico de scans fica salvo apenas neste aparelho.</span>
+<sc-if value="{{has}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{clear}}" style="{{clearStyle}}">{{clearText}}</button></sc-if>
+</div>
+</main>
+<nav aria-label="Navegação principal" style="height:88px;flex:none;box-sizing:border-box;border-top:1px solid #E6DFC4;background:#FFFCF1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;padding:6px 6px 34px;position:relative;z-index:3"><a href="App05Home.dc.html" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-6 8 6v9H4z"></path><path d="M10 20v-5h4v5"></path></svg>Início<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="App17Meis.dc.html" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg>Méis<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="App06Scanner.dc.html" aria-label="Escanear QR Code" style="display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:-30px;text-decoration:none;color:#161512;font-size:10px;font-weight:700"><span style="width:66px;height:76px;background:#161512;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><span style="width:58px;height:67px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"></path><path d="M7 12h10"></path></svg></span></span>SCAN</a><a href="App18Produtores.dc.html" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg>Produtores<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="App21Salvos.dc.html" aria-current="page" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#161512;font-size:10px;font-weight:700;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"></path></svg>Salvos<span style="width:6px;height:7px;background:#FFDE59;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a></nav>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { confirm: false }; }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const groups = Origem.history();
+    const c = this.state.confirm;
+    return { groups, has: groups.length > 0, empty: groups.length === 0,
+      clearText: c ? 'TOQUE DE NOVO PARA LIMPAR' : 'LIMPAR HISTÓRICO',
+      clearStyle: 'align-self:flex-start;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.08em;cursor:pointer;color:#161512;min-height:40px;transition:background .2s,padding .2s;' + (c ? 'background:#FFDE59;border-radius:999px;padding:0 14px' : 'background:transparent;text-decoration:underline;padding:0'),
+      clear: () => {
+        if (!this.state.confirm) { this.setState({ confirm: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ confirm: false }), 3000); return; }
+        clearTimeout(this.t); this.setState({ confirm: false }); Origem.clearHistory();
+      } };
+  }
+}
+</script>
+</body>
+</html>

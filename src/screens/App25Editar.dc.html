@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Editar mel — Área do revendedor</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:54px;flex:none"></div><header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="#App24Painel" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em">{{titulo}}</span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"></div></header><main style="flex:1;min-height:0;overflow:hidden;position:relative;display:flex;flex-direction:column">
+<div style="padding:4px 20px 0;display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;gap:14px;align-items:center">
+<span style="width:84px;height:100px;border-radius:12px;background:{{p.tint}};display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;box-sizing:border-box;flex:none;transition:background .3s ease"><svg viewBox="0 0 120 160" width="58" height="77" aria-hidden="true" style="position:relative;flex:none"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="{{p.accent}}"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path></svg></span>
+<div style="display:flex;flex-direction:column;gap:8px;min-width:0"><h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:34px;line-height:.92;">{{p.l1}}<br>{{p.l2}}</h1>
+<span style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:#FFF0B6;border-radius:10px;padding:0 10px;min-height:32px;font-size:12px;font-weight:600;letter-spacing:.05em">{{p.token}}</span></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">FLORADA</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{floradas}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></sc-for></div></div>
+<sc-if value="{{outra}}" hint-placeholder-val="{{ false }}"><span style="display:flex;align-items:center;border:2px solid #161512;border-radius:16px;min-height:56px;padding:0 16px;background:#FFFFFF;gap:2px"><input value="{{outraTxt}}" onChange="{{setOutra}}" placeholder="Nome da florada (ex.: Silvestre)" aria-label="Nome da florada" maxlength="18" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:600 16px Montserrat,sans-serif;color:#161512"></span></sc-if>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">PRODUTOR</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{produtores}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">MUNICÍPIO</span><span style="display:flex;align-items:center;border:2px solid #161512;border-radius:16px;min-height:56px;padding:0 16px;background:#FFFFFF;gap:2px"><input value="{{mun}}" onChange="{{setMun}}" placeholder="Município" aria-label="Município" maxlength="40" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:600 16px Montserrat,sans-serif;color:#161512"><b style="font-size:14px;color:#5E5A4E">— PR</b></span></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">COR</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{cores}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">PERFIL</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{perfis}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">CRISTALIZAÇÃO</span><div role="group" style="display:flex;gap:6px;flex-wrap:wrap"><sc-for list="{{crists}}" as="o" hint-placeholder-count="4"><button type="button" aria-pressed="{{o.on}}" onClick="{{o.pick}}" style="{{o.style}}">{{o.t}}</button></sc-for></div></div>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">COLHEITA</span><div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px"><select value="{{mes}}" onChange="{{setMes}}" aria-label="Mês da colheita" style="font:600 14px Montserrat,sans-serif;color:#161512;background:#FFFFFF;border:2px solid #161512;border-radius:16px;padding:0 12px;min-height:56px;width:100%"><sc-for list="{{meses}}" as="o" hint-placeholder-count="13"><option value="{{o.v}}">{{o.t}}</option></sc-for></select><select value="{{ano}}" onChange="{{setAno}}" aria-label="Ano da colheita" style="font:600 14px Montserrat,sans-serif;color:#161512;background:#FFFFFF;border:2px solid #161512;border-radius:16px;padding:0 12px;min-height:56px;width:100%"><sc-for list="{{anos}}" as="o" hint-placeholder-count="4"><option value="{{o}}">{{o}}</option></sc-for></select></div></div>
+<sc-if value="{{novo}}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">LOTE</span><span style="display:flex;align-items:center;border:2px solid #161512;border-radius:16px;min-height:56px;padding:0 16px;background:#FFFFFF;gap:2px"><b style="font-size:16px;letter-spacing:.04em;color:#5E5A4E">{{tokenPrefixo}}</b><input value="{{lote}}" onChange="{{setLote}}" inputmode="numeric" maxlength="5" placeholder="00000" aria-label="Número do lote" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:600 16px Montserrat,sans-serif;color:#161512;letter-spacing:.06em;font-variant-numeric:tabular-nums"></span></div></sc-if>
+<sc-if value="{{existente}}" hint-placeholder-val="{{ true }}"><div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">LOTE E TOKEN</span><span style="font-size:13px;line-height:1.5;color:#3D3A32"><b style="color:#161512">Lote {{p.lote}}</b> · o token não muda depois de criado, para não invalidar etiquetas já impressas.</span></div></sc-if>
+<div style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">POR QUE ESTE MEL É DIFERENTE?</span><span style="display:flex;border:2px solid #161512;border-radius:16px;padding:12px 16px;background:#FFFFFF"><textarea onChange="{{setPorque}}" value="{{porque}}" rows="3" maxlength="220" aria-label="Por que este mel é diferente" placeholder="O que o produtor informa sobre este lote" style="flex:1;min-width:0;border:0;outline:none;background:transparent;resize:none;font:500 14px/1.5 Montserrat,sans-serif;color:#161512"></textarea></span></div>
+<sc-if value="{{erro}}" hint-placeholder-val="{{ false }}"><span role="alert" style="font-size:13px;font-weight:600;background:#FFF0B6;border-radius:12px;padding:10px 12px">{{erro}}</span></sc-if>
+<button type="button" onClick="{{salvar}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;background:#FFDE59;color:#161512;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;border:0;font-family:Montserrat,sans-serif;width:100%;cursor:pointer;">{{salvarTxt}}</button>
+<sc-if value="{{existente}}" hint-placeholder-val="{{ true }}"><div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px"><a href="#App11Mel/{{id}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;font-size:12px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="2.6"></circle></svg>VER FICHA</a><a href="#App26Etiqueta/{{id}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;font-size:12px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>ETIQUETA</a></div></sc-if>
+<sc-if value="{{podeExcluir}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{excluir}}" style="{{excluirStyle}}">{{excluirTxt}}</button></sc-if>
+<span aria-hidden="true" style="height:16px;flex:none"></span>
+</div>
+</main>
+<div role="status" aria-live="polite" style="{{toastStyle}}"><span style="width:22px;height:25px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#161512" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></span><span style="flex:1;font-size:13px;font-weight:600">{{toast}}</span><a href="#App11Mel/{{id}}" style="color:#FFDE59;font-size:12px;font-weight:700;letter-spacing:.08em;padding:10px 6px;text-decoration:none">VER FICHA</a></div>
+<div aria-hidden="true" style="height:34px;flex:none"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) {
+    super(p);
+    const m = p.param && p.param !== 'novo' ? Origem.mel(p.param) : null;
+    const O = Origem.OPC, NI = Origem.NI;
+    const col = m && m.colheita !== NI ? m.colheita.split(/\s*\/\s*/) : ['', ''];
+    const known = !m || O.florada.indexOf(m.florada) > -1;
+    this.state = m
+      ? { id: m.id, florada: known ? m.florada : 'Outra', outraTxt: known ? '' : m.florada, prodId: m.prodId, mun: m.mun, cor: m.cor, perfil: m.perfil, crist: m.crist,
+          mes: col[0] || '', ano: col[1] || '', porque: m.porque, lote: m.lote, erro: '', toast: '', confirm: false }
+      : { id: null, florada: 'Multifloral', outraTxt: '', prodId: 'a', mun: Origem.prod('a').mun, cor: 'Clara', perfil: 'Suave', crist: NI,
+          mes: '', ano: String(new Date().getFullYear()), porque: '', lote: Origem.proximoLote(), erro: '', toast: '', confirm: false };
+    if (window.__ctx.flash) { this.state.toast = window.__ctx.flash; window.__ctx.flash = null; }
+  }
+  componentDidMount() {
+    if (!Origem.rev()) return window.__go('App23Login');
+    if (this.props.param && this.props.param !== 'novo' && !Origem.mel(this.props.param)) return window.__go('App24Painel');
+    if (this.state.toast) this.tt = setTimeout(() => this.setState({ toast: '' }), 2600);
+  }
+  componentWillUnmount() { clearTimeout(this.tt); clearTimeout(this.tc); }
+  florada() {
+    const s = this.state;
+    if (s.florada !== 'Outra') return s.florada;
+    const t = s.outraTxt.trim();
+    return t ? t.charAt(0).toUpperCase() + t.slice(1) : '';
+  }
+  salvar() {
+    const s = this.state, florada = this.florada();
+    if (!florada) return this.setState({ erro: 'Informe o nome da florada.' });
+    if (!s.mun.trim()) return this.setState({ erro: 'Informe o município.' });
+    if (!s.id) {
+      if (!/^\d{1,5}$/.test(s.lote)) return this.setState({ erro: 'O lote precisa ter até 5 números.' });
+      if (!Origem.tokenLivre(Origem.tokenPara(florada, s.lote))) return this.setState({ erro: 'Já existe um mel com esse lote e essa florada.' });
+    }
+    const colheita = s.mes && s.ano ? s.mes + ' / ' + s.ano : Origem.NI;
+    const id = Origem.saveMel(s.id, { florada, prodId: s.prodId, mun: s.mun.trim(), cor: s.cor, perfil: s.perfil, crist: s.crist, colheita, porque: s.porque.trim(), lote: s.lote });
+    if (!s.id) { window.__ctx.flash = 'Mel cadastrado'; return window.__go('App25Editar/' + id); }
+    this.setState({ erro: '', toast: 'Alterações salvas' });
+    clearTimeout(this.tt); this.tt = setTimeout(() => this.setState({ toast: '' }), 2600);
+  }
+  renderVals() {
+    const s = this.state, O = Origem.OPC, NI = Origem.NI;
+    const chip = (on) => 'border-radius:999px;padding:0 13px;min-height:40px;font:600 12px Montserrat,sans-serif;flex:none;cursor:pointer;' + (on ? 'background:#FFF0B6;border:1.5px solid #161512;color:#161512' : 'background:transparent;border:1px solid #D9D1B4;color:#3D3A32');
+    const opts = (list, key, label) => list.map((v) => ({ t: label ? label(v) : v, on: s[key] === v, style: chip(s[key] === v), pick: () => {
+      const patch = { [key]: v, erro: '' };
+      if (key === 'prodId') { const old = Origem.prod(s.prodId), nw = Origem.prod(v); if (!s.mun.trim() || (old && s.mun === old.mun)) patch.mun = nw.mun; }
+      this.setState(patch);
+    } }));
+    const florada = this.florada() || 'Florada';
+    const m = s.id ? Origem.mel(s.id) : null;
+    const multi = florada.toLowerCase() === 'multifloral';
+    const cores = { Laranjeira: ['#F6DC6B', '#FFF7D1'], Multifloral: ['#E9A23B', '#FCEBD0'], Eucalipto: ['#C2C76E', '#F3F3D8'] }[florada] || ['#FFDE59', '#FFF0B6'];
+    const token = m ? m.token : Origem.tokenPara(florada, s.lote);
+    const p = { l1: multi ? 'MEL' : 'MEL DE', l2: (multi ? 'Multifloral' : florada).toUpperCase(), accent: cores[0], tint: cores[1], token, lote: m ? m.lote : s.lote };
+    const ano = new Date().getFullYear(), anos = [];
+    for (let y = ano + 1; y >= ano - 3; y--) anos.push(String(y));
+    const novoSalvo = !!(s.id && Origem.isNovo(s.id));
+    const c = s.confirm;
+    return { id: s.id, p, titulo: s.id ? 'EDITAR MEL' : 'NOVO MEL', novo: !s.id, existente: !!s.id,
+      salvarTxt: s.id ? 'SALVAR ALTERAÇÕES' : 'CADASTRAR MEL',
+      floradas: opts(O.florada.concat(['Outra']), 'florada'), outra: s.florada === 'Outra', outraTxt: s.outraTxt,
+      produtores: opts(Origem.produtores.map((x) => x.id), 'prodId', (id) => Origem.prod(id).nome),
+      cores: opts(O.cor, 'cor'), perfis: opts(O.perfil, 'perfil'), crists: opts(O.crist, 'crist'),
+      meses: [{ v: '', t: 'Não informado' }].concat(O.meses.map((x) => ({ v: x, t: x }))), anos,
+      mes: s.mes, ano: s.ano, mun: s.mun, porque: s.porque, lote: s.lote, erro: s.erro, toast: s.toast,
+      tokenPrefixo: token.slice(0, -5),
+      setOutra: (e) => this.setState({ outraTxt: e.target.value, erro: '' }),
+      setMun: (e) => this.setState({ mun: e.target.value, erro: '' }),
+      setMes: (e) => this.setState({ mes: e.target.value }),
+      setAno: (e) => this.setState({ ano: e.target.value }),
+      setLote: (e) => this.setState({ lote: e.target.value.replace(/\D/g, '').slice(0, 5), erro: '' }),
+      setPorque: (e) => this.setState({ porque: e.target.value }),
+      salvar: () => this.salvar(),
+      toastStyle: 'position:absolute;left:16px;right:16px;bottom:calc(var(--sab) + 18px);z-index:5;background:#161512;color:#FFFCF1;border-radius:16px;padding:12px 12px 12px 16px;display:flex;align-items:center;gap:10px;transition:opacity .3s ease,transform .3s ease;' + (this.state.toast ? 'opacity:1;transform:none' : 'opacity:0;transform:translateY(16px);pointer-events:none'),
+      podeExcluir: novoSalvo,
+      excluirTxt: c ? 'TOQUE DE NOVO PARA EXCLUIR' : 'EXCLUIR ESTE MEL',
+      excluirStyle: 'align-self:flex-start;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.08em;cursor:pointer;color:#161512;min-height:40px;transition:background .2s,padding .2s;' + (c ? 'background:#FFDE59;border-radius:999px;padding:0 14px' : 'background:transparent;text-decoration:underline;padding:0'),
+      excluir: () => {
+        if (!c) { this.setState({ confirm: true }); clearTimeout(this.tc); this.tc = setTimeout(() => this.setState({ confirm: false }), 3000); return; }
+        Origem.removeMel(s.id); window.__go('App24Painel');
+      } };
+  }
+}
+</script>
+</body>
+</html>

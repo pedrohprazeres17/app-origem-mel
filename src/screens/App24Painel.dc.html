@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Seus méis — Área do revendedor</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:54px;flex:none"></div><header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="#App05Home" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em">ÁREA DO REVENDEDOR</span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"><button type="button" onClick="{{sair}}" aria-label="Sair da área do revendedor" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-4"></path><path d="M10 16l-4-4 4-4M6 12h10"></path></svg></button></div></header><main style="flex:1;min-height:0;overflow:hidden;position:relative;display:flex;flex-direction:column">
+<div style="padding:6px 20px 0;display:flex;flex-direction:column;gap:12px">
+<h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:46px;line-height:.92;">SEUS MÉIS</h1>
+<span style="font-size:13px;color:#3D3A32">Conectado como <b style="color:#161512">{{email}}</b>.</span>
+<span aria-live="polite" style="font-size:11px;font-weight:700;letter-spacing:.1em">{{count}}</span>
+<sc-for list="{{lista}}" as="m" hint-placeholder-count="4">
+<div style="background:#FFFFFF;border:1px solid #E6DFC4;border-radius:18px;padding:10px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;gap:12px;align-items:center">
+<span style="width:62px;height:74px;border-radius:12px;background:{{m.tint}};display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;box-sizing:border-box;flex:none"><svg viewBox="0 0 120 160" width="40" height="53" aria-hidden="true" style="position:relative;flex:none"><ellipse cx="60" cy="156" rx="44" ry="4" fill="#161512" opacity=".14"></ellipse><rect x="33" y="6" width="54" height="20" rx="5" fill="#161512"></rect><rect x="29" y="25" width="62" height="7" rx="2" fill="#2B2924"></rect><path d="M20 46c0-9 6-14 15-14h50c9 0 15 5 15 14v92c0 9-6 15-15 15H35c-9 0-15-6-15-15z" fill="{{m.accent}}"></path><rect x="27" y="48" width="6" height="92" rx="3" fill="#FFFFFF" opacity=".4"></rect><rect x="36" y="74" width="48" height="50" rx="4" fill="#FFFCF1"></rect><path d="M60 80l6 3.5v7L60 94l-6-3.5v-7z" fill="#161512"></path></svg></span>
+<span style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:19px;line-height:1">{{m.nomeUp}}</b><span style="font-size:12px;font-weight:600">{{m.prod}} · {{m.munS}}</span><span style="font-size:11px;color:#5E5A4E">Lote {{m.lote}} · atualizado em {{m.atualizado}}</span></span>
+<sc-if value="{{m.badge}}" hint-placeholder-val="{{ false }}"><span style="align-self:flex-start;background:#FFF0B6;border-radius:999px;padding:3px 8px;font-size:9px;font-weight:700;letter-spacing:.12em">{{m.badge}}</span></sc-if>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
+<a href="#App25Editar/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 10px;border:1.5px solid #161512;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-decoration:none;color:#161512;box-sizing:border-box;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path><path d="M13.5 6.5l4 4"></path></svg>EDITAR</a>
+<a href="#App26Etiqueta/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 10px;border:1.5px solid #161512;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-decoration:none;color:#161512;box-sizing:border-box;background:#FFDE59"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg>ETIQUETA</a>
+<a href="#App11Mel/{{m.id}}" style="display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:0 10px;border:1.5px solid #161512;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-decoration:none;color:#161512;box-sizing:border-box;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="2.6"></circle></svg>VER</a>
+</div>
+</div>
+</sc-for>
+<a href="#App25Editar/novo" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border:1.5px solid #161512;color:#161512;background:transparent;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>CADASTRAR NOVO MEL</a>
+<div style="border:1.5px dashed #A69E80;border-radius:16px;padding:12px 14px;display:flex;gap:10px"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg><span style="font-size:12px;line-height:1.5;color:#3D3A32">Versão de demonstração: as alterações ficam salvas só neste aparelho e aparecem no app para quem usar este celular.</span></div>
+<button type="button" onClick="{{reset}}" style="{{resetStyle}}">{{resetText}}</button>
+<span aria-hidden="true" style="height:12px;flex:none"></span>
+</div>
+</main>
+<div aria-hidden="true" style="height:34px;flex:none"></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(p) { super(p); this.state = { confirm: false }; }
+  componentDidMount() { if (!Origem.rev()) window.__go('App23Login'); }
+  componentWillUnmount() { clearTimeout(this.t); }
+  renderVals() {
+    const rev = Origem.rev() || { email: '' };
+    const lista = Origem.meis.map((m) => ({ ...m, badge: Origem.isNovo(m.id) ? 'NOVO' : Origem.isEditado(m.id) ? 'EDITADO' : '' }));
+    const n = lista.length, c = this.state.confirm;
+    return { email: rev.email, lista, count: n + (n === 1 ? ' MEL CADASTRADO' : ' MÉIS CADASTRADOS'),
+      sair: () => { Origem.logout(); window.__go('App05Home'); },
+      resetText: c ? 'TOQUE DE NOVO PARA RESTAURAR' : 'RESTAURAR DADOS ORIGINAIS',
+      resetStyle: 'align-self:flex-start;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.08em;cursor:pointer;color:#161512;min-height:40px;transition:background .2s,padding .2s;' + (c ? 'background:#FFDE59;border-radius:999px;padding:0 14px' : 'background:transparent;text-decoration:underline;padding:0'),
+      reset: () => {
+        if (!c) { this.setState({ confirm: true }); clearTimeout(this.t); this.t = setTimeout(() => this.setState({ confirm: false }), 3000); return; }
+        clearTimeout(this.t); this.setState({ confirm: false }); Origem.resetDemo();
+      } };
+  }
+}
+</script>
+</body>
+</html>

@@ -44,11 +44,28 @@
       border-radius: 44px; box-shadow: 0 0 0 10px #161512, 0 30px 80px rgba(22, 21, 18, .35);
     }
   }
+  #app textarea:focus-visible, #app select:focus-visible { outline: none; }
+
+  /* Impressão da etiqueta do pote (180 × 60 mm, tamanho real). */
+  #print-area { display: none; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 15mm; }
+    html, body { background: #fff !important; height: auto; }
+    #app { display: none !important; }
+    #print-area { display: block; }
+    #print-area .etq-pote { margin: 0 auto 6mm; outline: .2mm dashed #D9D1B4; break-inside: avoid; page-break-inside: avoid; }
+    #print-area .etq-pote:nth-child(4n) { break-after: page; page-break-after: always; }
+    #print-area .etq-pote:last-child { break-after: auto; page-break-after: auto; }
+  }
 </style>
 </head>
 <body>
 <div id="app"></div>
+<div id="print-area" aria-hidden="true"></div>
 <!--TEMPLATES-->
+<script>
+/*LIBS*/
+</script>
 <script>
 /*RUNTIME*/
 </script>
@@ -57,6 +74,7 @@ var S = window.__screens;
 window.__FIRST = /*FIRST*/;
 /*SCREENS*/
 window.__start();
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) navigator.serviceWorker.register('sw.js').catch(function () {});
 </script>
 </body>
 </html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Etiquetas QR · Origem</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --mel: #FFDE59; --mel-claro: #FFF0B6; --marfim: #FFFCF1; --carvao: #161512; --linha: #E6DFC4; --texto2: #5E5A4E; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #E9E2C8; color: var(--carvao); font-family: Montserrat, sans-serif; }
+  .hex { clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+  header { max-width: 920px; margin: 0 auto; padding: 28px 16px 8px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
+  .marca { display: flex; align-items: center; gap: 8px; font-family: Anton, sans-serif; font-size: 20px; letter-spacing: .04em; }
+  .marca i { width: 20px; height: 23px; background: var(--mel); display: block; }
+  h1 { margin: 10px 0 6px; font-family: Anton, sans-serif; font-weight: 400; font-size: clamp(36px, 8vw, 56px); line-height: .92; }
+  header p { margin: 0; max-width: 520px; font-size: 14px; line-height: 1.5; font-weight: 500; }
+  .acoes { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 20px; border-radius: 999px; border: 1.5px solid var(--carvao); background: var(--mel); color: var(--carvao); font: 700 13px Montserrat, sans-serif; letter-spacing: .1em; cursor: pointer; text-decoration: none; }
+  .btn.sec { background: transparent; }
+  .nota { max-width: 920px; margin: 8px auto 0; padding: 0 16px; font-size: 12px; color: #3D3A32; }
+  .folha { max-width: 920px; margin: 20px auto 48px; padding: 0 16px; display: flex; flex-direction: column; gap: 16px; }
+  .prev { width: 100%; max-width: 680px; aspect-ratio: 3 / 1; position: relative; overflow: hidden; border-radius: 12px; box-shadow: 0 0 0 1px #E6DFC4; background: #FFFCF1; }
+  .prev .etq-pote { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 15mm; }
+    html, body { background: #fff; }
+    header, .nota { display: none; }
+    .folha { max-width: none; margin: 0; padding: 0; display: block; }
+    .prev { max-width: none; width: auto; aspect-ratio: auto; border-radius: 0; box-shadow: none; overflow: visible; margin: 0 auto 6mm; break-inside: avoid; page-break-inside: avoid; }
+    .prev:nth-child(4n) { break-after: page; page-break-after: always; }
+    .prev .etq-pote { position: static; transform: none !important; margin: 0 auto; outline: .2mm dashed #D9D1B4; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <span class="marca"><i class="hex"></i>ORIGEM</span>
+    <h1>ETIQUETAS<br>DOS POTES</h1>
+    <p>Modelo de 180 × 60 mm para dar a volta no pote, 4 por folha A4. Quem apontar a câmera do celular para o QR Code abre a ficha do mel direto no app.</p>
+  </div>
+  <div class="acoes"><button class="btn" type="button" onclick="print()">IMPRIMIR</button><a class="btn sec" href="./">ABRIR O APP</a></div>
+</header>
+<p class="nota" id="nota"></p>
+<main class="folha" id="folha"></main>
+<script>
+/*LIBS*/
+</script>
+<script>
+(function () {
+  var App = window.Origem, base = App.base().replace(/etiquetas\.html$/, '');
+  document.getElementById('nota').textContent = 'Os códigos apontam para ' + base + ' — dados de Produtor A, B e C ainda são ilustrativos.';
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var folha = document.getElementById('folha');
+  folha.innerHTML = App.meis.map(function (m) {
+    return '<div class="prev" role="img" aria-label="Etiqueta de ' + esc(m.nome) + ', ' + esc(m.token) + '">' + App.labelHTML(m, base + '#t=' + m.token) + '</div>';
+  }).join('');
+  function fit() {
+    Array.prototype.forEach.call(folha.querySelectorAll('.prev'), function (box) {
+      var el = box.firstElementChild; el.style.transform = 'scale(' + box.clientWidth / el.offsetWidth + ')';
+    });
+  }
+  fit(); window.addEventListener('resize', fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+})();
+</script>
+</body>
+</html>

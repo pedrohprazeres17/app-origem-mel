@@ -2,7 +2,7 @@
 
 ## Status
 
-Ativo — HTML funcional gerado a partir do código-fonte original do Claude Design (19/11/2026).
+Ativo — V2 funcional (scanner real, QR Codes por lote, fichas dinâmicas, offline) sobre as telas originais do Claude Design.
 
 ## Objetivo
 
@@ -43,26 +43,49 @@ Permitir que o consumidor conheça o mel além do pote: produtor, origem, florad
 
 ## Próximo passo
 
-Validar a V1 com Pedro e a autora. Depois, definir dados reais, painel de cadastro de produtores/lotes, banco de dados, autenticação e leitura real de QR Code para o MVP.
+Validar a V2 com Pedro e a autora (de preferência escaneando etiquetas impressas em potes reais). Depois: dados reais dos produtores, painel de cadastro de lotes, banco de dados e autenticação.
 
-## Versão atual (HTML funcional)
+## V2 — app funcional
 
-O app é gerado **diretamente do código-fonte das 22 telas do Claude Design**, sem redesenho:
+A V2 mantém a aparência das 22 telas do Claude Design e transforma o protótipo em app de verdade.
 
-- `design/` — arquivos originais exportados do projeto (`App01Splash.dc.html` … `App22Historico.dc.html` e `canvas.json`).
-- `tools/build.mjs` — gera o `index.html` a partir de `design/`. Rodar: `node tools/build.mjs`.
-- `tools/runtime.js` — mini-runtime que executa as telas no mesmo formato do Claude Design (`{{holes}}`, `sc-for`, `sc-if`, `setState`), com atualização do DOM no lugar para manter as animações do protótipo.
-- `tools/shell.html` — casca da página (fontes, viewport, PWA).
+**O que funciona**
 
-Adaptações feitas sobre o protótipo (só o necessário para virar app):
+- **Scanner real:** abre a câmera traseira e lê QR Codes (BarcodeDetector quando o navegador tem; senão jsQR, carregado só nessa hora). Lanterna real nos aparelhos que suportam. Sem câmera ou sem permissão, a tela volta à ilustração do design, com um aviso; tocar no código simula a leitura.
+- **QR Codes reais e link direto:** cada lote tem um link `…/#t=MEL-2026-LAR-00421`. Escanear com a câmera nativa do celular abre o app direto na ficha. A tela "Detalhes de origem" mostra o QR do lote, com botão de compartilhar.
+- **Etiquetas para imprimir:** `etiquetas.html` gera uma etiqueta com QR Code para cada lote (A4, pronta para imprimir).
+- **Fichas dinâmicas:** ficha, resumo, origem, detalhes do token, "mel encontrado" e perfil do produtor funcionam para os 4 méis e os 3 produtores (`#App11Mel/euc`, `#App15Produtor/b`…). O que o briefing não informa aparece como "Não informado".
+- **Token digitado:** valida os 4 tokens cadastrados (Enter também busca). Token inválido leva para "Não encontramos este token", mostrando o código lido.
+- **Meus méis:** salvar/remover em qualquer ficha (com desfazer), "Comparar salvos" já abre os dois primeiros, histórico real de leituras (via QR Code ou token) agrupado por dia, com limpar.
+- **App de verdade:** botão Voltar segue o histórico, transições entre telas, vibração na leitura, funciona offline (service worker) e pode ser instalado na tela inicial.
 
-- **Mobile first:** a tela ocupa o aparelho inteiro; as faixas de status bar/home indicator viram as áreas seguras do celular e o conteúdo rola quando a tela é menor que 844 px. Em telas largas o app aparece no tamanho exato do protótipo (390 × 844).
-- **Fluxos:** splash avança sozinho; onboarding só aparece na primeira vez; scan simulado → localizando → mel encontrado; token digitado é validado (`MEL-2026-LAR-00421` encontra o mel; outro código leva para “Token não encontrado” mostrando o código lido).
-- **PWA:** pode ser adicionado à tela inicial (manifest + ícones).
+**Área do revendedor (demonstração)** — pedido do grupo em 24/11/2026
 
-Limitações conhecidas: a câmera/leitura real de QR Code ainda é simulada; salvos, histórico e filtros mantêm o estado de demonstração de cada tela, como no protótipo; dados de Produtor A/B/C continuam ilustrativos.
+- **Login:** card "Área do revendedor" no fim da Início. Na demonstração vale qualquer e-mail e senha (o botão "USAR" preenche um exemplo). Não há servidor: o acesso e as alterações ficam salvos só no aparelho.
+- **Painel "Seus méis":** lista os méis com atalhos para editar, fazer etiqueta e ver a ficha; permite cadastrar mel novo e restaurar os dados originais.
+- **Editar mel:** florada (ou outra), produtor, município, cor, perfil, cristalização, colheita e "por que este mel é diferente". Mel novo ganha lote e token automáticos. O token de um mel existente não muda, para não invalidar etiquetas impressas. As mudanças aparecem na hora em todas as telas do app.
+- **Etiqueta do pote:** segue o modelo do grupo (`Etiqueta_Projeto_III.pdf`, 180 × 60 mm) com as fontes e cores do app, e com o QR Code do lote à direita, em "Escaneie e descubra". Prévia, quantidade (1, 4, 8 ou 12) e "Imprimir ou salvar PDF" em tamanho real, 4 por folha A4. Com o revendedor conectado, os cards de "Explore os méis", "Méis disponíveis" e a ficha do mel ganham o botão de etiqueta.
+- O modelo da etiqueta fica num lugar só (`labelHTML` em `src/data.js`), usado pelo app e por `etiquetas.html`.
+
+**Como o código está organizado**
+
+- `design/` — arquivos originais exportados do Claude Design (referência, não editar).
+- `src/screens/` — as 22 telas do design (com dados dinâmicos) e as 4 telas do revendedor (`App23Login` a `App26Etiqueta`), no mesmo formato e padrão visual.
+- `src/data.js` — méis, produtores, tokens, salvos e histórico (salvos no aparelho, via `localStorage`).
+- `tools/runtime.js` — executa o formato do Claude Design (`{{holes}}`, `sc-for`, `sc-if`, `setState`), rotas, link do QR e transições.
+- `tools/build.mjs` — gera `index.html`, `etiquetas.html`, `sw.js` e `vendor/jsQR.js`.
+
+Para regerar depois de mudar algo:
+
+```bash
+npm install
+npm run build
+```
+
+**Limitações conhecidas:** o login do revendedor é só de demonstração (sem servidor nem senha de verdade); edições, salvos e histórico ficam só no aparelho; Produtor A/B/C continuam ilustrativos.
 
 ## Links
 
 - Aplicativo: `https://pedrohprazeres17.github.io/app-origem-mel/`
+- Etiquetas: `https://pedrohprazeres17.github.io/app-origem-mel/etiquetas.html`
 - Repositório: `https://github.com/pedrohprazeres17/app-origem-mel`
