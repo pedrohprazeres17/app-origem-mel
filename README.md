@@ -61,7 +61,7 @@ A V2 mantém a aparência das 22 telas do Claude Design e transforma o protótip
 
 **Área do revendedor (demonstração)** — pedido do grupo em 24/11/2026
 
-- **Login:** card "Área do revendedor" no fim da Início. Na demonstração vale qualquer e-mail e senha (o botão "USAR" preenche um exemplo). Não há servidor: o acesso e as alterações ficam salvos só no aparelho.
+- **Login ao abrir o app:** depois da abertura e do onboarding aparece "Como você quer entrar?", com "Sou comprador", "Sou revendedor" e "Continuar sem conta" (vale só até fechar o app). Quem já entrou vai direto para a Início; quem abre pelo QR Code de um pote vai direto para a ficha. Na demonstração vale qualquer e-mail e senha (o botão "USAR" preenche um exemplo). Não há servidor: as contas e as alterações ficam salvas só no aparelho. O card no fim da Início mostra a conta e permite sair.
 - **Painel "Seus méis":** lista os méis com atalhos para editar, fazer etiqueta e ver a ficha; permite cadastrar mel novo e restaurar os dados originais.
 - **Editar mel:** florada (ou outra), produtor, município, cor, perfil, cristalização, colheita e "por que este mel é diferente". Mel novo ganha lote e token automáticos. O token de um mel existente não muda, para não invalidar etiquetas impressas. As mudanças aparecem na hora em todas as telas do app.
 - **Etiqueta do pote:** segue o modelo do grupo (`Etiqueta_Projeto_III.pdf`, 180 × 60 mm) com as fontes e cores do app, e com o QR Code do lote à direita, em "Escaneie e descubra". Prévia, quantidade (1, 4, 8 ou 12) e "Imprimir ou salvar PDF" em tamanho real, 4 por folha A4. Com o revendedor conectado, os cards de "Explore os méis", "Méis disponíveis" e a ficha do mel ganham o botão de etiqueta.
@@ -70,7 +70,7 @@ A V2 mantém a aparência das 22 telas do Claude Design e transforma o protótip
 **Como o código está organizado**
 
 - `design/` — arquivos originais exportados do Claude Design (referência, não editar).
-- `src/screens/` — as 22 telas do design (com dados dinâmicos) e as 4 telas do revendedor (`App23Login` a `App26Etiqueta`), no mesmo formato e padrão visual.
+- `src/screens/` — as 22 telas do design (com dados dinâmicos) e as telas novas de entrada e do revendedor (`App23Login` a `App27Entrar`), no mesmo formato e padrão visual.
 - `src/data.js` — méis, produtores, tokens, salvos e histórico (salvos no aparelho, via `localStorage`).
 - `tools/runtime.js` — executa o formato do Claude Design (`{{holes}}`, `sc-for`, `sc-if`, `setState`), rotas, link do QR e transições.
 - `tools/build.mjs` — gera `index.html`, `etiquetas.html`, `sw.js` e `vendor/jsQR.js`.

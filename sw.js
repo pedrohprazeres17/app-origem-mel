@@ -1,5 +1,5 @@
 /* Service worker do Origem: o app abre mesmo sem internet. */
-var CACHE = 'origem-b0e8f644d5';
+var CACHE = 'origem-e188318520';
 var CORE = ['./', './index.html', './manifest.webmanifest', './icon.svg', './icon-180.png', './icon-192.png', './icon-512.png', './vendor/jsQR.js'];
 
 self.addEventListener('install', function (e) {

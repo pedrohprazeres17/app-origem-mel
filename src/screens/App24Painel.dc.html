@@ -50,7 +50,7 @@ class Component extends DCLogic {
     const lista = Origem.meis.map((m) => ({ ...m, badge: Origem.isNovo(m.id) ? 'NOVO' : Origem.isEditado(m.id) ? 'EDITADO' : '' }));
     const n = lista.length, c = this.state.confirm;
     return { email: rev.email, lista, count: n + (n === 1 ? ' MEL CADASTRADO' : ' MÉIS CADASTRADOS'),
-      sair: () => { Origem.logout(); window.__go('App05Home'); },
+      sair: () => { Origem.logout(); window.__go('App27Entrar'); },
       resetText: c ? 'TOQUE DE NOVO PARA RESTAURAR' : 'RESTAURAR DADOS ORIGINAIS',
       resetStyle: 'align-self:flex-start;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.08em;cursor:pointer;color:#161512;min-height:40px;transition:background .2s,padding .2s;' + (c ? 'background:#FFDE59;border-radius:999px;padding:0 14px' : 'background:transparent;text-decoration:underline;padding:0'),
       reset: () => {

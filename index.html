@@ -178,7 +178,7 @@
 <a href="#App20Entenda/1" style="width:150px;flex:none;background:#FFF0B6;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#161512"><span style="width:28px;height:32px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3"></circle><circle cx="16.8" cy="10.5" r="3"></circle><circle cx="15" cy="16" r="3"></circle><circle cx="9" cy="16" r="3"></circle><circle cx="7.2" cy="10.5" r="3"></circle></svg></span><b style="font-size:13px;line-height:1.25">O que é florada?</b></a>
 <a href="#App20Entenda/2" style="width:150px;flex:none;background:#FFF0B6;border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#161512"><span style="width:28px;height:32px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 4a8 8 0 0 1 0 16z" fill="#161512"></path></svg></span><b style="font-size:13px;line-height:1.25">Por que a cor muda?</b></a>
 </div>
-<a href="{{revHref}}" style="display:flex;align-items:center;gap:12px;background:#161512;color:#FFFCF1;border-radius:18px;padding:14px 14px 14px 16px;text-decoration:none;margin:4px 0 16px"><span style="width:40px;height:46px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></span><span style="flex:1;display:flex;flex-direction:column;gap:3px"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:19px;line-height:1">ÁREA DO REVENDEDOR</b><span style="font-size:12px;line-height:1.4;color:#D9D1B4">{{revText}}</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FFFCF1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a>
+<a href="{{revHref}}" onClick="{{revClick}}" style="display:flex;align-items:center;gap:12px;background:#161512;color:#FFFCF1;border-radius:18px;padding:14px 14px 14px 16px;text-decoration:none;margin:4px 0 16px"><span style="width:40px;height:46px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><template data-sc="if" value="{{revIcon}}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></template><template data-sc="if" value="{{userIcon}}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg></template></span><span style="flex:1;display:flex;flex-direction:column;gap:3px"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:19px;line-height:1">{{revTitulo}}</b><span style="font-size:12px;line-height:1.4;color:#D9D1B4">{{revText}}</span></span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FFFCF1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></a>
 </div>
 </main>
 <nav aria-label="Navegação principal" style="height:var(--nav-h);flex:none;box-sizing:border-box;border-top:1px solid #E6DFC4;background:#FFFCF1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:start;padding:6px 6px var(--sab);position:relative;z-index:3"><a href="#App05Home" aria-current="page" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#161512;font-size:10px;font-weight:700;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-6 8 6v9H4z"></path><path d="M10 20v-5h4v5"></path></svg>Início<span style="width:6px;height:7px;background:#FFDE59;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="#App17Meis" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"></path></svg>Méis<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="#App06Scanner" aria-label="Escanear QR Code" style="display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:-30px;text-decoration:none;color:#161512;font-size:10px;font-weight:700"><span style="width:66px;height:76px;background:#161512;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><span style="width:58px;height:67px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"></path><path d="M7 12h10"></path></svg></span></span>SCAN</a><a href="#App18Produtores" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg>Produtores<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a><a href="#App21Salvos" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:#5E5A4E;font-size:10px;font-weight:600;min-height:44px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#5E5A4E" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12v16l-6-4-6 4z"></path></svg>Salvos<span style="width:6px;height:7px;background:transparent;display:block;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);margin-top:1px"></span></a></nav>
@@ -589,12 +589,12 @@
 
 </div>
 </template>
-<template id="t-App23Login" data-title="Entrar — Área do revendedor">
+<template id="t-App23Login" data-title="Entrar — Origem">
 <div style="width:100%;height:100%;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
-<div aria-hidden="true" style="height:var(--sat);flex:none"></div><header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="#App05Home" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em">ÁREA DO REVENDEDOR</span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"></div></header><main style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;position:relative;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:var(--sat);flex:none"></div><header style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 16px;position:relative;z-index:2"><a href="#App27Entrar" aria-label="Voltar" style="width:44px;height:44px;border-radius:50%;background:#FFFCF1;border:1.5px solid #161512;display:flex;align-items:center;justify-content:center;box-sizing:border-box;flex:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></a><span style="font-size:13px;font-weight:700;letter-spacing:.06em">{{titulo}}</span><div style="display:flex;gap:8px;min-width:44px;justify-content:flex-end"></div></header><main style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;position:relative;display:flex;flex-direction:column">
 <div style="padding:4px 20px 0;display:flex;flex-direction:column;gap:16px;flex:1">
 <span style="width:56px;height:65px;background:#FFF0B6;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#161512" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg></span>
-<div style="display:flex;flex-direction:column;gap:10px"><h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:44px;line-height:.92;">ENTRAR</h1><p style="margin:0;font-size:15px;line-height:1.5;font-weight:500">Acesse para editar os méis cadastrados e fazer as etiquetas dos lotes.</p></div>
+<div style="display:flex;flex-direction:column;gap:10px"><h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:44px;line-height:.92;">ENTRAR</h1><p style="margin:0;font-size:15px;line-height:1.5;font-weight:500">{{sub}}</p></div>
 <label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">E-MAIL</span>
 <span style="display:flex;align-items:center;border:2px solid #161512;border-radius:16px;min-height:56px;padding:0 16px;background:#FFFFFF;gap:2px"><input type="email" value="{{email}}" onChange="{{setEmail}}" onKeyDown="{{key}}" placeholder="voce@exemplo.com" autocomplete="username" autocapitalize="off" spellcheck="false" enterkeyhint="next" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:600 16px Montserrat,sans-serif;color:#161512"></span></label>
 <label style="display:flex;flex-direction:column;gap:8px"><span style="font-size:10px;font-weight:700;letter-spacing:.16em;">SENHA</span>
@@ -603,7 +603,7 @@
 <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span style="font-size:13px;color:#5E5A4E">Demonstração: <b style="color:#161512">qualquer e-mail e senha</b></span><button type="button" onClick="{{demo}}" style="background:transparent;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.06em;text-decoration:underline;color:#161512;min-height:44px;cursor:pointer">USAR</button></div>
 <button type="button" onClick="{{entrar}}" style="display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;background:#FFDE59;color:#161512;border-radius:999px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.1em;box-sizing:border-box;border:0;font-family:Montserrat,sans-serif;width:100%;cursor:pointer;">ENTRAR</button>
 <div style="margin-top:auto;margin-bottom:8px;background:#FFF0B6;border-radius:18px;padding:14px;display:flex;gap:14px;align-items:center">
-<span aria-hidden="true" style="width:44px;height:51px;background:#FFFCF1;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></span>
+<span aria-hidden="true" style="width:44px;height:51px;background:#FFFCF1;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><template data-sc="if" value="{{comp}}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg></template><template data-sc="if" value="{{notComp}}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></template></span>
 <span style="display:flex;flex-direction:column;gap:3px"><b style="font-size:14px">Versão de demonstração</b><span style="font-size:12px;line-height:1.45;color:#3D3A32">Não há servidor: o acesso e as alterações ficam salvos só neste aparelho.</span></span></div>
 </div>
 </main>
@@ -688,6 +688,23 @@
 </div>
 </main>
 <div role="status" aria-live="polite" style="{{toastStyle}}"><span style="width:22px;height:25px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#161512" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></span><span style="flex:1;font-size:13px;font-weight:600">{{toast}}</span></div>
+<div aria-hidden="true" style="height:var(--sab);flex:none"></div>
+</div>
+</template>
+<template id="t-App27Entrar" data-title="Entrar — Origem">
+<div style="width:100%;height:100%;box-sizing:border-box;background:#FFFCF1;font-family:Montserrat,sans-serif;color:#161512;position:relative;overflow:hidden;display:flex;flex-direction:column">
+<div aria-hidden="true" style="height:var(--sat);flex:none"></div><main style="flex:1;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;position:relative;display:flex;flex-direction:column">
+<div style="padding:0 20px;display:flex;flex-direction:column;gap:14px;flex:1">
+<div style="display:flex;align-items:center;height:44px"><span style="display:flex;align-items:center;gap:8px"><span style="width:20px;height:23px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"></span><span style="font-family:Anton,sans-serif;font-size:20px;letter-spacing:.04em">ORIGEM</span></span></div>
+<div style="display:flex;flex-direction:column;gap:6px"><h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:52px;line-height:.92;">COMO VOCÊ<br>QUER ENTRAR?</h1><span style="font-size:16px;font-weight:500">Escolha o seu perfil para continuar.</span></div>
+<a href="#App23Login/comprador" style="display:flex;align-items:center;gap:14px;border-radius:24px;padding:18px 18px 18px 22px;min-height:118px;box-sizing:border-box;text-decoration:none;position:relative;overflow:hidden;background:#FFDE59;color:#161512"><span aria-hidden="true" style="position:absolute;right:-24px;bottom:-30px;width:110px;height:127px;background:#FFE98A;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span><span style="flex:1;display:flex;flex-direction:column;gap:6px;position:relative"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:32px;line-height:.95">SOU<br>COMPRADOR</b><span style="font-size:12px;font-weight:600;line-height:1.4">Escaneie, compare e salve os méis que você conhece.</span></span><span style="position:relative"><span style="width:76px;height:88px;background:#161512;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#FFDE59" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg></span></span></a>
+<a href="#App23Login" style="display:flex;align-items:center;gap:14px;border-radius:24px;padding:18px 18px 18px 22px;min-height:118px;box-sizing:border-box;text-decoration:none;position:relative;overflow:hidden;background:#161512;color:#FFFCF1"><span aria-hidden="true" style="position:absolute;right:-24px;bottom:-30px;width:110px;height:127px;background:#2B2924;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"></span><span style="flex:1;display:flex;flex-direction:column;gap:6px;position:relative"><b style="font-family:Anton,sans-serif;font-weight:400;font-size:32px;line-height:.95">SOU<br>REVENDEDOR</b><span style="font-size:12px;font-weight:600;line-height:1.4">Edite os méis do ponto de venda e faça as etiquetas dos lotes.</span></span><span style="position:relative"><span style="width:76px;height:88px;background:#FFDE59;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#161512" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></span></span></a>
+<button type="button" onClick="{{semConta}}" style="align-self:center;background:transparent;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.08em;text-decoration:underline;color:#161512;min-height:44px;padding:0 12px;cursor:pointer">CONTINUAR SEM CONTA</button>
+<div style="margin-top:auto;margin-bottom:8px;background:#FFF0B6;border-radius:18px;padding:14px;display:flex;gap:14px;align-items:center">
+<span aria-hidden="true" style="width:44px;height:51px;background:#FFFCF1;display:flex;align-items:center;justify-content:center;flex:none;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#161512" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5M12 8h.01"></path></svg></span>
+<span style="display:flex;flex-direction:column;gap:3px"><b style="font-size:14px">Versão de demonstração</b><span style="font-size:12px;line-height:1.45;color:#3D3A32">Vale qualquer e-mail e senha. Não há servidor: as contas ficam salvas só neste aparelho.</span></span></div>
+</div>
+</main>
 <div aria-hidden="true" style="height:var(--sab);flex:none"></div>
 </div>
 </template>
@@ -3094,7 +3111,7 @@ var qrcode = function() {
   var st = { saved: [], history: [], onb: false };
   try { var raw = localStorage.getItem(KEY); if (raw) st = Object.assign(st, JSON.parse(raw)); } catch (e) {}
   try { if (localStorage.getItem('origem:onb') === '1') st.onb = true; } catch (e) {}
-  st.edits = st.edits || {}; st.novos = st.novos || []; st.rev = st.rev || null;
+  st.edits = st.edits || {}; st.novos = st.novos || []; st.rev = st.rev || null; st.comprador = st.comprador || null;
   rebuild();
   var subs = [];
   function save() {
@@ -3163,9 +3180,21 @@ var qrcode = function() {
     },
 
     /* ---------- área do revendedor (demonstração) ---------- */
+    /* Contas de demonstração: revendedor (edita os méis) e comprador. */
     rev: function () { return st.rev; },
-    login: function (email) { st.rev = { email: String(email).trim().toLowerCase(), nome: 'Revendedor responsável', t: Date.now() }; save(); },
-    logout: function () { st.rev = null; save(); },
+    comprador: function () { return st.comprador; },
+    user: function () { return st.rev ? Object.assign({ tipo: 'revendedor' }, st.rev) : st.comprador ? Object.assign({ tipo: 'comprador' }, st.comprador) : null; },
+    login: function (email, tipo) {
+      var conta = { email: String(email).trim().toLowerCase(), t: Date.now() };
+      if (tipo === 'comprador') { st.comprador = conta; st.rev = null; }
+      else { st.rev = Object.assign({ nome: 'Revendedor responsável' }, conta); st.comprador = null; }
+      save();
+    },
+    logout: function () { st.rev = null; st.comprador = null; App.setGuest(false); save(); },
+    /* "Continuar sem conta" vale só até fechar o app; ao abrir de novo, a entrada aparece outra vez. */
+    guest: function () { try { return sessionStorage.getItem('origem:visitante') === '1'; } catch (e) { return false; } },
+    setGuest: function (on) { try { if (on) sessionStorage.setItem('origem:visitante', '1'); else sessionStorage.removeItem('origem:visitante'); } catch (e) {} },
+    needsEntry: function () { return !App.user() && !App.guest(); },
     OPC: {
       florada: ['Laranjeira', 'Eucalipto', 'Multifloral'],
       cor: ['Clara', 'Âmbar', 'Escura', 'Variável', NI],
@@ -3456,7 +3485,8 @@ var qrcode = function() {
 
   /* Comportamentos de app que o protótipo apenas sugere. */
   function hooks(id) {
-    if (id === 'App01Splash') later(function () { to(App.onboarded() ? 'App05Home' : 'App02OnbA'); }, 2600);
+    if (id === 'App01Splash') later(function () { to(!App.onboarded() ? 'App02OnbA' : App.needsEntry() ? 'App27Entrar' : 'App05Home'); }, 2600);
+    if (id === 'App27Entrar') App.setOnboarded();
     if (id === 'App05Home') App.setOnboarded();
     if (id === 'App08Loading') later(function () { to(resolveToken()); }, 1900);
   }
@@ -3478,7 +3508,9 @@ var qrcode = function() {
     if (id === 'App08Loading' && prev === 'App07Token') { ctx.token = current.state.val; ctx.via = 'token'; }
     else if (id === 'App08Loading' && prev !== '#deeplink' && prev !== 'App08Loading' && prev !== 'App06Scanner') { ctx.token = null; ctx.via = 'qr'; }
     if (id === 'App09Found' && !param && prev === 'App08Loading') { timers.forEach(clearTimeout); return to(resolveToken()); }
-    if (id === 'App02OnbA' && prev === 'App01Splash' && App.onboarded()) { id = 'App05Home'; param = null; }
+    if (id === 'App02OnbA' && prev === 'App01Splash' && App.onboarded()) { id = App.needsEntry() ? 'App27Entrar' : 'App05Home'; param = null; }
+    // Login ao abrir o app: ao sair do onboarding, ou ao abrir direto na Início sem conta.
+    if (id === 'App05Home' && App.needsEntry() && (!current || /^App0[1-4]/.test(prev || ''))) { id = 'App27Entrar'; param = null; }
 
     // Direção da navegação (para a transição e para o botão Voltar).
     var dir = 1, st = history.state;
@@ -3554,10 +3586,13 @@ return Component;
 S["App05Home"] = (function () {
 class Component extends DCLogic {
   renderVals() {
-    const rev = Origem.rev();
+    const rev = Origem.rev(), comp = Origem.comprador();
     return { meis: Origem.meis.slice(0, 3).map((m) => ({ ...m, rev: !!rev, notRev: !rev })),
-      revHref: rev ? '#App24Painel' : '#App23Login',
-      revText: rev ? 'Conectado como ' + rev.email + '. Abrir o painel.' : 'Entre para editar os méis e fazer as etiquetas dos lotes.' };
+      revHref: rev ? '#App24Painel' : comp ? null : '#App27Entrar',
+      revClick: comp ? () => { Origem.logout(); window.__go('App27Entrar'); } : null,
+      revIcon: !!rev, userIcon: !rev,
+      revTitulo: rev ? 'ÁREA DO REVENDEDOR' : comp ? 'SUA CONTA' : 'ENTRAR',
+      revText: rev ? 'Conectado como ' + rev.email + '. Abrir o painel.' : comp ? 'Conectado como ' + comp.email + '. Toque para sair.' : 'Comprador ou revendedor: escolha como quer entrar.' };
   }
 }
 return Component;
@@ -3953,23 +3988,30 @@ return Component;
 S["App23Login"] = (function () {
 class Component extends DCLogic {
   constructor(p) { super(p); this.state = { email: '', senha: '', ver: false, erro: '' }; }
-  componentDidMount() { if (Origem.rev()) window.__go('App24Painel'); }
+  componentDidMount() {
+    if (this.props.param === 'comprador' && Origem.comprador()) window.__go('App05Home');
+    else if (this.props.param !== 'comprador' && Origem.rev()) window.__go('App24Painel');
+  }
   entrar() {
     const email = this.state.email.trim();
     if (!/^\S+@\S+\.\S+$/.test(email)) return this.setState({ erro: 'Digite um e-mail válido.' });
     if (this.state.senha.length < 4) return this.setState({ erro: 'A senha precisa ter pelo menos 4 caracteres.' });
-    Origem.login(email);
-    window.__go('App24Painel');
+    const comprador = this.props.param === 'comprador';
+    Origem.login(email, comprador ? 'comprador' : 'revendedor');
+    window.__go(comprador ? 'App05Home' : 'App24Painel');
   }
   renderVals() {
     const v = this.state.ver;
-    return { email: this.state.email, senha: this.state.senha, erro: this.state.erro,
+    const comp = this.props.param === 'comprador';
+    return { comp, notComp: !comp, titulo: comp ? 'COMPRADOR' : 'ÁREA DO REVENDEDOR',
+      sub: comp ? 'Entre para guardar os méis salvos e o histórico de leituras.' : 'Acesse para editar os méis cadastrados e fazer as etiquetas dos lotes.',
+      email: this.state.email, senha: this.state.senha, erro: this.state.erro,
       senhaType: v ? 'text' : 'password', senhaBtn: v ? 'OCULTAR' : 'MOSTRAR', senhaLabel: v ? 'Ocultar senha' : 'Mostrar senha',
       setEmail: (e) => this.setState({ email: e.target.value, erro: '' }),
       setSenha: (e) => this.setState({ senha: e.target.value, erro: '' }),
       toggleSenha: () => this.setState({ ver: !v }),
       key: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.entrar(); } },
-      demo: () => this.setState({ email: 'revenda@origem.app', senha: 'origem', erro: '' }),
+      demo: () => this.setState({ email: this.props.param === 'comprador' ? 'cliente@origem.app' : 'revenda@origem.app', senha: 'origem', erro: '' }),
       entrar: () => this.entrar() };
   }
 }
@@ -3986,7 +4028,7 @@ class Component extends DCLogic {
     const lista = Origem.meis.map((m) => ({ ...m, badge: Origem.isNovo(m.id) ? 'NOVO' : Origem.isEditado(m.id) ? 'EDITADO' : '' }));
     const n = lista.length, c = this.state.confirm;
     return { email: rev.email, lista, count: n + (n === 1 ? ' MEL CADASTRADO' : ' MÉIS CADASTRADOS'),
-      sair: () => { Origem.logout(); window.__go('App05Home'); },
+      sair: () => { Origem.logout(); window.__go('App27Entrar'); },
       resetText: c ? 'TOQUE DE NOVO PARA RESTAURAR' : 'RESTAURAR DADOS ORIGINAIS',
       resetStyle: 'align-self:flex-start;border:0;font:700 12px Montserrat,sans-serif;letter-spacing:.08em;cursor:pointer;color:#161512;min-height:40px;transition:background .2s,padding .2s;' + (c ? 'background:#FFDE59;border-radius:999px;padding:0 14px' : 'background:transparent;text-decoration:underline;padding:0'),
       reset: () => {
@@ -4136,6 +4178,14 @@ class Component extends DCLogic {
       toast: this.state.toast,
       toastStyle: 'position:absolute;left:16px;right:16px;bottom:calc(var(--sab) + 18px);z-index:5;background:#161512;color:#FFFCF1;border-radius:16px;padding:12px 12px 12px 16px;display:flex;align-items:center;gap:10px;transition:opacity .3s ease,transform .3s ease;' + (this.state.toast ? 'opacity:1;transform:none' : 'opacity:0;transform:translateY(16px);pointer-events:none') };
   }
+}
+return Component;
+})();
+
+S["App27Entrar"] = (function () {
+class Component extends DCLogic {
+  componentDidMount() { if (Origem.user()) window.__go(Origem.rev() ? 'App24Painel' : 'App05Home'); }
+  renderVals() { return { semConta: () => { Origem.setGuest(true); window.__go('App05Home'); } }; }
 }
 return Component;
 })();

@@ -197,7 +197,8 @@
 
   /* Comportamentos de app que o protótipo apenas sugere. */
   function hooks(id) {
-    if (id === 'App01Splash') later(function () { to(App.onboarded() ? 'App05Home' : 'App02OnbA'); }, 2600);
+    if (id === 'App01Splash') later(function () { to(!App.onboarded() ? 'App02OnbA' : App.needsEntry() ? 'App27Entrar' : 'App05Home'); }, 2600);
+    if (id === 'App27Entrar') App.setOnboarded();
     if (id === 'App05Home') App.setOnboarded();
     if (id === 'App08Loading') later(function () { to(resolveToken()); }, 1900);
   }
@@ -219,7 +220,9 @@
     if (id === 'App08Loading' && prev === 'App07Token') { ctx.token = current.state.val; ctx.via = 'token'; }
     else if (id === 'App08Loading' && prev !== '#deeplink' && prev !== 'App08Loading' && prev !== 'App06Scanner') { ctx.token = null; ctx.via = 'qr'; }
     if (id === 'App09Found' && !param && prev === 'App08Loading') { timers.forEach(clearTimeout); return to(resolveToken()); }
-    if (id === 'App02OnbA' && prev === 'App01Splash' && App.onboarded()) { id = 'App05Home'; param = null; }
+    if (id === 'App02OnbA' && prev === 'App01Splash' && App.onboarded()) { id = App.needsEntry() ? 'App27Entrar' : 'App05Home'; param = null; }
+    // Login ao abrir o app: ao sair do onboarding, ou ao abrir direto na Início sem conta.
+    if (id === 'App05Home' && App.needsEntry() && (!current || /^App0[1-4]/.test(prev || ''))) { id = 'App27Entrar'; param = null; }
 
     // Direção da navegação (para a transição e para o botão Voltar).
     var dir = 1, st = history.state;
