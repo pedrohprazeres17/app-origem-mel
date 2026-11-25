@@ -102,7 +102,7 @@
   var st = { saved: [], history: [], onb: false };
   try { var raw = localStorage.getItem(KEY); if (raw) st = Object.assign(st, JSON.parse(raw)); } catch (e) {}
   try { if (localStorage.getItem('origem:onb') === '1') st.onb = true; } catch (e) {}
-  st.edits = st.edits || {}; st.novos = st.novos || []; st.rev = st.rev || null;
+  st.edits = st.edits || {}; st.novos = st.novos || []; st.rev = st.rev || null; st.comprador = st.comprador || null;
   rebuild();
   var subs = [];
   function save() {
@@ -171,9 +171,21 @@
     },
 
     /* ---------- área do revendedor (demonstração) ---------- */
+    /* Contas de demonstração: revendedor (edita os méis) e comprador. */
     rev: function () { return st.rev; },
-    login: function (email) { st.rev = { email: String(email).trim().toLowerCase(), nome: 'Revendedor responsável', t: Date.now() }; save(); },
-    logout: function () { st.rev = null; save(); },
+    comprador: function () { return st.comprador; },
+    user: function () { return st.rev ? Object.assign({ tipo: 'revendedor' }, st.rev) : st.comprador ? Object.assign({ tipo: 'comprador' }, st.comprador) : null; },
+    login: function (email, tipo) {
+      var conta = { email: String(email).trim().toLowerCase(), t: Date.now() };
+      if (tipo === 'comprador') { st.comprador = conta; st.rev = null; }
+      else { st.rev = Object.assign({ nome: 'Revendedor responsável' }, conta); st.comprador = null; }
+      save();
+    },
+    logout: function () { st.rev = null; st.comprador = null; App.setGuest(false); save(); },
+    /* "Continuar sem conta" vale só até fechar o app; ao abrir de novo, a entrada aparece outra vez. */
+    guest: function () { try { return sessionStorage.getItem('origem:visitante') === '1'; } catch (e) { return false; } },
+    setGuest: function (on) { try { if (on) sessionStorage.setItem('origem:visitante', '1'); else sessionStorage.removeItem('origem:visitante'); } catch (e) {} },
+    needsEntry: function () { return !App.user() && !App.guest(); },
     OPC: {
       florada: ['Laranjeira', 'Eucalipto', 'Multifloral'],
       cor: ['Clara', 'Âmbar', 'Escura', 'Variável', NI],
